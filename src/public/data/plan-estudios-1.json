@@ -1,0 +1,29 @@
+{
+    "materias": [
+        {
+            "codigo": "IF000",
+            "nombre": "algebra",
+            "año": 1,
+            "cuatrimestre": 1
+        },
+        {
+            "codigo": "IF000",
+            "nombre": "analisis",
+            "año": 1,
+            "cuatrimestre": 2
+        }
+    ], 
+    "correlatividades": [
+        {
+            "materia": "IF000",
+            "correlativas": ["IF001", "IF002"]
+        }
+    ],
+    "requisitos": [
+        {
+            "materia": "IC000",
+            "cantidadMaterias": 10
+        }
+    ]
+
+}

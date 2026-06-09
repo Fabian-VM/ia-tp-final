@@ -1,0 +1,15 @@
+{
+    "student": "Pepito",
+    "facts": {
+        "aprobada": [
+            ["algebra", 9],
+            ["analisis", 10]
+        ],
+        "cursada": [
+            ["estadistica", 8]
+        ],
+        "cursando": [
+            ["complementos"]
+        ]
+    }
+}
