@@ -78,18 +78,22 @@ OTROS REQUISITOS
 % Validaciones a agregar durante el cargado del JSON
 % - No deben haber correlatividades circulares
 % - Un estado por código, un código no puede tener más de un estado acá
+% - Lo que está cursando debe estar acorde al cuatrimestre actual
+cuatrimestre_actual(2).
+cantidad_finales_por_cuatrimestre(2).
+cantidad_cursar_por_cuatrimestre(1).
+
+% tambien se le deben pedir las optativas a elegir
+% una vez esos datos cargados, mostrar la tabla de todas las asignaturas
+% para que marque y luego ponga "generar planificación"
 
 aprobada('IF001').
 aprobada('MA045').
 aprobada('IF002').
-
 cursada('MA046').
 cursada(Codigo) :- aprobada(Codigo).
-
 cursando('FA007').
 cursando('MA008').
-
-
 
 
 % =========== INPUT: HECHOS SOBRE EL PLAN DE ESTUDIOS ================
@@ -104,39 +108,116 @@ anio(5).
 cuatrimestre(1).
 cuatrimestre(2).
 
+periodo(Anio, Cuatrimestre) :-
+    anio(Anio),
+    cuatrimestre(Cuatrimestre).
+
 % ASIGNATURAS
-% El formato de conocimiento es: asignatura(Código, Tipo, Nombre, Anio, Cuatrimestre)
+% asignatura(Código, Tipo, Nombre, Anio, Cuatrimestre)
+
+% 1°
 asignatura('IF001', materia, elementos_de_informatica, 1, 1).
 asignatura('MA045', materia, algebra, 1, 1).
 asignatura('IF002', materia, expresion_de_problemas_y_algoritmos, 1, 1).
 asignatura('IF003', materia, algoritmica_y_programacion_i, 1, 2).
 asignatura('MA046', materia, analisis_matematico, 1, 2).
 asignatura('MA008', materia, elementos_de_logica_y_matematica_discreta, 1, 2).
-asignatura('FA007', curso, acreditacion_de_idioma, 1, _).
-
+asignatura('FA007', curso, acreditacion_de_idioma, requisito_externo, _).
+% 2°
+asignatura('IF004', materia, sistemas_y_organizaciones, 2, 1).
+asignatura('IF005', materia, arquitectura_de_computadoras, 2, 1).
+asignatura('IF006', materia, algoritmica_y_programacion_ii, 2, 1).
+asignatura('IF007', materia, bases_de_datos_i, 2, 2).
 asignatura('MA006', materia, estadistica, 2, 2).
-asignatura('FA102', curso, estrategias_comunicacionales, 3, 2).
+asignatura('IF008', materia, programacion_orientada_a_objetos, 2, 2).
+% 3°
+asignatura('IF009', materia, laboratorio_de_programacion_y_lenguajes, 3, 1).
+asignatura('IF010', materia, analisis_y_diseno_de_sistemas, 3, 1).
+asignatura('IF011', materia, sistemas_operativos, 3, 1).
+asignatura('IF012', materia, desarrollo_de_software, 3, 2).
+asignatura('IF013', materia, fundamentos_teoricos_de_informatica, 3, 2).
+asignatura('MA047', materia, complementos_matematicos, 3, 2).
+asignatura('FA102', curso, estrategias_comunicacionales, curso, _).
+asignatura('FA103', curso, relaciones_humanas, curso, _).
+% 4°
 asignatura('IF015', materia, ingenieria_de_software, 4, 1).
+asignatura('IF018', materia, inteligencia_artificial, 4, 1).
+asignatura('IF019', materia, redes_y_transmision_de_datos, 4, 1).
+asignatura('IF016', materia, aspectos_legales_y_profesionales, 4, 2).
+asignatura('IF020', materia, paradigmas_y_lenguajes_de_programacion, 4, 2).
+asignatura('IF022', materia, sistemas_distribuidos, 4, 2).
+% 5°
+asignatura('OP1', optativa, optativa_i, 5, 1).
+asignatura('IF021', materia, arquitectura_de_redes_y_servicios, 5, 1).
+asignatura('IF017', materia, taller_de_nuevas_tecnologias, 5, 1).
+asignatura('OP2', optativa, optativa_ii, 5, 2).
+asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, 5, 2).
 asignatura('IF026', tesina, tesina, 5, _).
 
 
+
+
 % REQUISITOS
-% Los requisitos se interpretan como "para iniciar X se requiere Y"
+% requisito(Materia, Requisito)
+
+% Correlativas directas
 requisito('IF003', requiere(cursada, 'IF002')).
+requisito('IF005', requiere(cursada, 'IF001')).
+requisito('IF006', requiere(cursada, 'IF003')).
+requisito('IF006', requiere(cursada, 'MA008')).
+requisito('IF007', requiere(cursada, 'IF006')).
 requisito('MA006', requiere(cursada, 'MA045')).
 requisito('MA006', requiere(cursada, 'MA046')).
+requisito('IF008', requiere(cursada, 'IF006')).
+requisito('IF009', requiere(cursada, 'IF008')).
+requisito('IF010', requiere(cursada, 'IF004')).
+requisito('IF010', requiere(cursada, 'IF007')).
+requisito('IF011', requiere(cursada, 'IF005')).
+requisito('IF011', requiere(cursada, 'IF006')).
+requisito('IF012', requiere(cursada, 'IF008')).
+requisito('IF012', requiere(cursada, 'IF010')).
+requisito('IF013', requiere(cursada, 'IF006')).
+requisito('IF013', requiere(cursada, 'MA008')).
+requisito('MA047', requiere(cursada, 'MA045')).
+requisito('MA047', requiere(cursada, 'MA046')).
+requisito('IF015', requiere(cursada, 'IF012')).
 requisito('IF015', requiere(cursada, 'MA006')).
-requisito(Codigo, requiere(aprobada, Precorrelativa)) :-
-    asignatura(Codigo, _, _, _, _),
-    asignatura(Precorrelativa, _, _, _, _),
-    requisito(Codigo, requiere(cursada, Correlativa)),
-    requisito(Correlativa, requiere(cursada, Precorrelativa)).
-requisito(Codigo, requiere(aprobada, 'FA007')) :-
-    asignatura(Codigo, _, _, A, _),
-    A > 1.
+requisito('IF018', requiere(cursada, 'IF013')).
+requisito('IF018', requiere(cursada, 'MA047')).
+requisito('IF019', requiere(cursada, 'IF011')).
+requisito('IF020', requiere(cursada, 'IF009')).
+requisito('IF020', requiere(cursada, 'IF013')).
+requisito('IF022', requiere(cursada, 'IF019')).
+requisito('IF021', requiere(cursada, 'IF019')).
+requisito('IF017', requiere(cursada, 'IF015')).
+requisito('IF017', requiere(cursada, 'IF019')).
+requisito('IF025', requiere(cursada, 'IF015')).
+requisito('IF025', requiere(cursada, 'IF022')).
+requisito('IF016', requiere(cantidad_minima_aprobadas, 15)).
 requisito('FA102', requiere(cantidad_minima_aprobadas, 10)).
+requisito('FA103', requiere(cantidad_minima_aprobadas, 10)).
 requisito('IF026', requiere(periodo_aprobado, 4, _)).
 requisito('IF026', requiere(periodo_cursado, 5, 1)).
+requisito(Codigo, requiere(aprobada, 'FA007')) :-
+    anio(Anio),
+    Anio >= 2,
+    asignatura(Codigo, _, _, Anio, _).
+requisito(Codigo, requiere(aprobada, 'FA102')) :-
+    anio(Anio),
+    Anio >= 5,
+    asignatura(Codigo, _, _, Anio, _).
+requisito(Codigo, requiere(aprobada, 'FA103')) :-
+    anio(Anio),
+    Anio >= 5,
+    asignatura(Codigo, _, _, Anio, _).
+
+% Regla de correlativas y pre-correlativas
+requisito(Codigo, requiere(aprobada, Precorrelativa)) :- 
+    asignatura(Codigo, _, _, _, _), 
+    asignatura(Precorrelativa, _, _, _, _), 
+    requisito(Codigo, requiere(cursada, Correlativa)), 
+    requisito(Correlativa, requiere(cursada, Precorrelativa)).
+
 
 
 
@@ -186,8 +267,10 @@ cantidad_minima_cursadas(N) :-
 
 
 
-% requisitos
 
+% =========== REGLAS SOBRE EL PLAN DE ESTUDIOS ================
+
+% requisitos
 cumple_estos_requisitos([]).
 cumple_estos_requisitos([requiere(Requisito)|RestoRequisitos]) :-
     Requisito =.. [Functor | Args],
@@ -198,27 +281,7 @@ cumple_todos_los_requisitos(Codigo) :-
     findall(Requisito, requisito(Codigo, Requisito), ListaRequisitos),
     cumple_estos_requisitos(ListaRequisitos).
 
-
-
-
-
-
-% =========== REGLAS SOBRE EL PLAN DE ESTUDIOS ================
-
-
-% posibilidades
-
-puede_aprobar(Codigo) :-
-    asignatura(Codigo, _, _, _, _),
-    not(aprobada(Codigo)),
-    cumple_todos_los_requisitos(Codigo).
-
-puede_cursar(Codigo) :-
-    asignatura(Codigo, _, _, _, _),
-    not(cursada(Codigo)),
-    not(cursando(Codigo)),
-    cumple_todos_los_requisitos(Codigo).
-
+% posibles acciones
 puede_cursar_en_periodo(Codigo, A, C) :-
     asignatura(Codigo, _, _, A, C),
     not(cursada(Codigo)),
@@ -231,7 +294,30 @@ puede_aprobar_en_periodo(Codigo, A, C) :-
     cumple_todos_los_requisitos(Codigo).
 
 
+
 % =========== REGLAS ALGORÍTMICAS ================
+
+% estado inicial: listas de materias cursadas y aprobadas
+%     ver al estado como una foto de en que cuatrimestre se encuentra
+%     Cursadas = bagof cursadas
+%     Aprobadas = bagof aprobadas
+%     estado(Cursadas, Aprobadas, AniosDespues, Cuatrimestre)
+
+% transiciones: 
+%     todas las posibles cosas que se pueden hacer en una corsada
+%     similar a lo de viajes, seria "cursada?"
+%     estudia(cursa = [...], rinde_examen = [...])
+
+% estados: todas las posibilidades coherentes
+%     solo se validarian
+%     estado origen + transicion = estado destino
+
+% estado final: todas las listas completas (bagof todas las asignaturas)
+
+% el algoritmo seria un depth limited? cual seria el estado final si lo hago parametrizable?
+% si la entrada es el estado actual + parametros que limitan las transiciones, 
+
+
 
 
 
