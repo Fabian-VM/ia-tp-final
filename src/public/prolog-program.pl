@@ -79,41 +79,60 @@ OTROS REQUISITOS
 % - No deben haber correlatividades circulares
 % - Un estado por código, un código no puede tener más de un estado acá
 % - Lo que está cursando debe estar acorde al cuatrimestre actual
-cuatrimestre_actual(2).
-cantidad_finales_por_cuatrimestre(2).
-cantidad_cursar_por_cuatrimestre(1).
 
 % tambien se le deben pedir las optativas a elegir
 % una vez esos datos cargados, mostrar la tabla de todas las asignaturas
 % para que marque y luego ponga "generar planificación"
 
-aprobada('IF001').
-aprobada('MA045').
-aprobada('IF002').
-cursada('MA046').
-cursada(Codigo) :- aprobada(Codigo).
-cursando('FA007').
-cursando('MA008').
+% STARTHERE Parámetros del estado
+/*
+% El estado se puede interpretar como la situación del alumno durante las vacaciones antes
+% de cualquier cuatrimestre
+Estado = [
+    Aprobadas, 
+    Cursadas, 
+    CuatrimestreProximo,
+    CantidadCursarPorCuatrimestre, 
+    CantidadAprobarPorCuatrimestre, 
+    AnioCalendarioActual
+]
 
+Aprobadas = ['IF001', 'MA045', 'IF002']
+Cursadas = ['MA046']
+CuatrimestreProximo = 1
+CantidadFinalesPorCuatrimestre = 2
+CantidadCursarPorCuatrimestre = 1
+AnioCalendarioActual = 2026
+
+Si el usuario no está en vacaciones, y esta cursando, aparecerán estos argumentos a normalizar
+La decision tomada para simplificar es que el proximo estado será que tenga las cursadas
+Eso para simplificar, porque si añado lo de poder rendir finales, tendria que
+cargar tambien el calendario académico pero eso varia por año
+
+Cursando = ['FA007', 'MA008']
+CuatrimestreActual = 2
+
+proximo_cuatrimestre(CuatrimestreActual, CuatrimestreProximo)
+append(CursadasActuales, Cursando, Cursadas)
+
+*/
 
 % =========== INPUT: HECHOS SOBRE EL PLAN DE ESTUDIOS ================
 
-% PERIODOS
-anio(1).
-anio(2).
-anio(3).
-anio(4).
-anio(5).
+% PERIODOS DETERMINADOS POR EL PLAN
+anio_academico(1).
+anio_academico(2).
+anio_academico(3).
+anio_academico(4).
+anio_academico(5).
+cuatrimestre_academico(1).
+cuatrimestre_academico(2).
+proximo_cuatrimestre(1, 2).
+proximo_cuatrimestre(2, 1).
 
-cuatrimestre(1).
-cuatrimestre(2).
-
-periodo(Anio, Cuatrimestre) :-
-    anio(Anio),
-    cuatrimestre(Cuatrimestre).
 
 % ASIGNATURAS
-% asignatura(Código, Tipo, Nombre, Anio, Cuatrimestre)
+% asignatura(Código, Tipo, Nombre, AnioAcademico, Cuatrimestre)
 
 % 1°
 asignatura('IF001', materia, elementos_de_informatica, 1, 1).
@@ -147,20 +166,20 @@ asignatura('IF016', materia, aspectos_legales_y_profesionales, 4, 2).
 asignatura('IF020', materia, paradigmas_y_lenguajes_de_programacion, 4, 2).
 asignatura('IF022', materia, sistemas_distribuidos, 4, 2).
 % 5°
-asignatura('OP1', optativa, optativa_i, 5, 1).
 asignatura('IF021', materia, arquitectura_de_redes_y_servicios, 5, 1).
 asignatura('IF017', materia, taller_de_nuevas_tecnologias, 5, 1).
-asignatura('OP2', optativa, optativa_ii, 5, 2).
 asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, 5, 2).
 asignatura('IF026', tesina, tesina, 5, _).
-
+% STARTHERE Optativas hardcodeadas
+%asignatura('OP1', optativa, optativa_i, 5, 1).
+%asignatura('OP2', optativa, optativa_ii, 5, 2).
+asignatura('IF024', materia, informatica_industrial, 5, 1).
+asignatura('IF028', materia, monitorizacion_y_visualizacion, 5, 2).
 
 
 
 % REQUISITOS
-% requisito(Materia, Requisito)
-
-% Correlativas directas
+% requisito(Codigo, requiere(Requisito))
 requisito('IF003', requiere(cursada, 'IF002')).
 requisito('IF005', requiere(cursada, 'IF001')).
 requisito('IF006', requiere(cursada, 'IF003')).
@@ -196,117 +215,176 @@ requisito('IF025', requiere(cursada, 'IF022')).
 requisito('IF016', requiere(cantidad_minima_aprobadas, 15)).
 requisito('FA102', requiere(cantidad_minima_aprobadas, 10)).
 requisito('FA103', requiere(cantidad_minima_aprobadas, 10)).
-requisito('IF026', requiere(periodo_aprobado, 4, _)).
-requisito('IF026', requiere(periodo_cursado, 5, 1)).
+requisito('IF026', requiere(posee_periodo_aprobado, 4, _)).
+requisito('IF026', requiere(posee_periodo_cursado, 5, 1)).
 requisito(Codigo, requiere(aprobada, 'FA007')) :-
-    anio(Anio),
-    Anio >= 2,
-    asignatura(Codigo, _, _, Anio, _).
+    anio_academico(AnioAcademico),
+    AnioAcademico >= 2,
+    asignatura(Codigo, _, _, AnioAcademico, _).
 requisito(Codigo, requiere(aprobada, 'FA102')) :-
-    anio(Anio),
-    Anio >= 5,
-    asignatura(Codigo, _, _, Anio, _).
+    anio_academico(AnioAcademico),
+    AnioAcademico >= 5,
+    asignatura(Codigo, _, _, AnioAcademico, _).
 requisito(Codigo, requiere(aprobada, 'FA103')) :-
-    anio(Anio),
-    Anio >= 5,
-    asignatura(Codigo, _, _, Anio, _).
-
-% Regla de correlativas y pre-correlativas
+    anio_academico(AnioAcademico),
+    AnioAcademico >= 5,
+    asignatura(Codigo, _, _, AnioAcademico, _).
 requisito(Codigo, requiere(aprobada, Precorrelativa)) :- 
     asignatura(Codigo, _, _, _, _), 
     asignatura(Precorrelativa, _, _, _, _), 
     requisito(Codigo, requiere(cursada, Correlativa)), 
     requisito(Correlativa, requiere(cursada, Precorrelativa)).
-
-
+% STARTHERE optativas hardcodeadas
+requisito('IF024', requiere(cursada, 'IF015')).
+requisito('IF024', requiere(cursada, 'IF019')).
+requisito('IF028', requiere(cursada, 'IF024')).
 
 
 % FILTROS
-% El filtro de busqueda es por (Tipo, Anio, Cuatrimestre, ListaPredicados)
-% donde ListaPredicados es una lista que contiene los predicados que se deben cumplir
-% sobre las asignaturas
-asignatura_cumple_condicion(_, []).
-asignatura_cumple_condicion(Codigo, [Predicado | RestoPredicados]) :-
-    call(Predicado, Codigo),
-    asignatura_cumple_condicion(Codigo, RestoPredicados).
+asignaturas_por_filtros(Tipo, AnioAcademico, CuatrimestreAcademico, Lista) :-
+    findall(Codigo, asignatura(Codigo, Tipo, _, AnioAcademico, Cuatrimestre), Lista).
 
-asignaturas_por_filtros(Tipo, Anio, Cuatrimestre, ListaPredicados, Lista) :-
-    findall(Codigo, (
-        asignatura(Codigo, Tipo, _, Anio, Cuatrimestre),
-        asignatura_cumple_condicion(Codigo, ListaPredicados)
-    ), Lista).
-
-cantidad_asignaturas_por_filtro(Tipo, Anio, Cuatrimestre, ListaPredicados, Cantidad) :-
-    asignaturas_por_filtros(Tipo, Anio, Cuatrimestre, ListaPredicados, Lista),
+cantidad_asignaturas_por_filtro(Tipo, AnioAcademico, CuatrimestreAcademico, Cantidad) :-
+    asignaturas_por_filtros(Tipo, AnioAcademico, CuatrimestreAcademico, Lista),
     length(Lista, Cantidad).
 
-% filtros rápidos
-cantidad_total_cursadas(N) :- 
-    cantidad_asignaturas_por_filtro(_, _, _, [cursada], N).
 
-cantidad_total_aprobadas(N) :- 
-    cantidad_asignaturas_por_filtro(_, _, _, [aprobada], N).
+% ATAJOS
+% STARTHERE Probablemente convenga dejar el contenido adentro del cumplimientod e requistos
+% porque por si mismos hasta ahora no tienen sentido de ser
+contar_cursadas(Aprobadas, Cursadas, N) :-
+    length(Aprobadas, X),
+    length(Cursadas, Y),
+    N is X + Y.
 
-periodo_cursado(A, C) :-
-    cantidad_asignaturas_por_filtro(_, A, C, [cursada], CantidadCursadas),
-    cantidad_asignaturas_por_filtro(_, A, C, _, CantidadAsignaturas),
+contar_aprobadas(Aprobadas, N) :-
+    length(Aprobadas, N).
+
+posee_periodo_cursado(AnioAcademico, CuatrimestreAcademico, Aprobadas, Cursadas) :-
+    contar_cursadas(Aprobadas, Cursadas, CantidadCursadas),
+    cantidad_asignaturas_por_filtro(_, AnioAcademico, CuatrimestreAcademico, CantidadAsignaturas),
     CantidadCursadas = CantidadAsignaturas.
 
-periodo_aprobado(A, C) :-
-    cantidad_asignaturas_por_filtro(_, A, C, [aprobada], CantidadCursadas),
-    cantidad_asignaturas_por_filtro(_, A, C, _, CantidadAsignaturas),
+posee_periodo_aprobado(AnioAcademico, CuatrimestreAcademico, Aprobadas) :-
+    contar_aprobadas(Aprobadas, N),
+    cantidad_asignaturas_por_filtro(_, AnioAcademico, CuatrimestreAcademico, CantidadAsignaturas),
     CantidadCursadas = CantidadAsignaturas.
-
-cantidad_minima_aprobadas(N) :-
-    cantidad_total_aprobadas(M),
-    M >= N.
-
-cantidad_minima_cursadas(N) :-
-    cantidad_total_cursadas(M),
-    M >= N.
 
 
 
 
 % =========== REGLAS SOBRE EL PLAN DE ESTUDIOS ================
 
-% requisitos
-cumple_estos_requisitos([]).
-cumple_estos_requisitos([requiere(Requisito)|RestoRequisitos]) :-
-    Requisito =.. [Functor | Args],
-    call(Functor, Args),
-    cumple_estos_requisitos(RestoRequisitos).
+% CUMPLIMIENTO DE REQUISITOS
+cumple_este_requisito(requiere(cursada, Codigo), Aprobadas, Cursadas) :-
+    member(Codigo, Aprobadas);
+    member(Codigo, Cursadas).
 
-cumple_todos_los_requisitos(Codigo) :-
+cumple_este_requisito(requiere(aprobada, Codigo), Aprobadas, _) :-
+    member(Codigo, Aprobadas).
+
+cumple_este_requisito(requiere(cantidad_minima_aprobadas, CantidadMinima), Aprobadas, _) :-
+    contar_aprobadas(Aprobadas, CantidadAprobadas),
+    CantidadAprobadas >= CantidadMinima.
+
+cumple_este_requisito(requiere(posee_periodo_cursado, AnioAcademico, CuatrimestreAcademico), Aprobadas, Cursadas) :-
+    posee_periodo_cursado(AnioAcademico, CuatrimestreAcademico, Aprobadas, Cursadas).
+
+cumple_este_requisito(requiere(posee_periodo_aprobado, AnioAcademico, CuatrimestreAcademico), Aprobadas, _) :-
+    posee_periodo_aprobado(AnioAcademico, CuatrimestreAcademico, Aprobadas).
+
+cumple_estos_requisitos([], _, _).
+cumple_estos_requisitos([Requisito|RestoRequisitos], Aprobadas, Cursadas) :-
+    cumple_este_requisito(Requisito, Aprobadas, Cursadas),
+    cumple_estos_requisitos(RestoRequisitos, Aprobada, Cursadas).
+
+cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas) :-
     findall(Requisito, requisito(Codigo, Requisito), ListaRequisitos),
-    cumple_estos_requisitos(ListaRequisitos).
-
-% posibles acciones
-puede_cursar_en_periodo(Codigo, A, C) :-
-    asignatura(Codigo, _, _, A, C),
-    not(cursada(Codigo)),
-    not(cursando(Codigo)),
-    cumple_todos_los_requisitos(Codigo).
-
-puede_aprobar_en_periodo(Codigo, A, C) :-
-    asignatura(Codigo, _, _, A, C),
-    not(aprobada(Codigo)),
-    cumple_todos_los_requisitos(Codigo).
+    cumple_estos_requisitos(ListaRequisitos, Aprobadas, Cursadas).
 
 
+
+
+
+% CALCULO DE POSIBLES AVANCES
+puede_cursar_en_cuatrimestre(Aprobadas, Cursadas, CuatrimestreAcademico, ListaCodigos) :-
+    findall(Codigo, (
+        asignatura(Codigo, _, _, _, CuatrimestreAcademico),
+        not(member(Codigo, Cursadas)),
+        not(member(Codigo, Aprobadas)),
+        cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas)
+    ), ListaCodigos).
+
+puede_aprobar_en_cuatrimestre(Aprobadas, Cursadas, CuatrimestreAcademico, ListaCodigos) :-
+    findall(Codigo, (
+        asignatura(Codigo, materia, _, _, CuatrimestreAcademico),
+        member(Codigo, Cursadas),
+        not(member(Codigo, Aprobadas)),
+        cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas)
+    ), ListaCodigos).
+
+
+/*
+
+Estado = [
+    Aprobadas, 
+    Cursadas, 
+    CuatrimestreProximo,
+    CantidadCursarPorCuatrimestre, 
+    CantidadAprobarPorCuatrimestre, 
+    AnioCalendarioActual
+]
+avance_posible(
+    Aprobadas, 
+    Cursadas, 
+    CuatrimestreProximo,
+    CantidadCursarPorCuatrimestre,
+    CantidadAprobarPorCuatrimestre,
+    [AvanceCursadas, AvanceAprobaciones]
+) :-
+    cuatrimestre_academico(CuatrimestreProximo),
+    puede_cursar_en_cuatrimestre(Codigo, CuatrimestreProximo),
+    puede_aprobar_en_cuatrimestre(Codigo, CuatrimestreProximo),
+
+    findall(Codigo, puede_cursar_en_cuatrimestre(Codigo, CuatrimestreSiguiente), CursarDespues),
+    length(CursarDespues, X),
+    cantidad_cursar_por_cuatrimestre(LimiteCursadas),
+    X =< 
+
+*/
 
 % =========== REGLAS ALGORÍTMICAS ================
 
-% estado inicial: listas de materias cursadas y aprobadas
-%     ver al estado como una foto de en que cuatrimestre se encuentra
-%     Cursadas = bagof cursadas
-%     Aprobadas = bagof aprobadas
-%     estado(Cursadas, Aprobadas, AniosDespues, Cuatrimestre)
+/*
+% el estado inicial debe tomar el input del usuario y normalizarlo
+estado_inicial([ListaCursando, ListaCursadas, ListaAprobadas, AnioCalendario, Cuatrimestre]) :-
+    findall(Codigo, cursando(Codigo), ListaCursando),
+    findall(Codigo, cursada(Codigo), ListaCursadas),
+    findall(Codigo, aprobada(Codigo), ListaAprobadas),
+    cuatrimestre_actual(Cuatrimestre),
+    anio_calendario_actual(AnioCalendario).
 
-% transiciones: 
+estado_final([[], [], ListaAprobadas, _, Cuatrimestre]) :-
+    findall(Codigo, asignatura(Codigo, _, _, _, _), ListaAsignaturas),
+    ListaAsignaturas = ListaAprobadas,
+    cuatrimestre_academico(Cuatrimestre).
+
+
+transicion(
+    [ListaCursandoA, ListaCursadasA, ListaAprobadasA, AnioCalendarioA, CuatrimestreA],
+    [ListaCursandoB, ListaCursadasB, ListaAprobadasB, AnioCalendarioB, CuatrimestreB],
+    [AvanceCursadas, AvanceAprobaciones]
+) :-
+    estado([ListaCursandoA, ListaCursadasA, ListaAprobadasA, AnioCalendarioA, CuatrimestreA]),
+    avance_posible([AvanceCursadas, AvanceAprobaciones]),
+
+
 %     todas las posibles cosas que se pueden hacer en una corsada
 %     similar a lo de viajes, seria "cursada?"
 %     estudia(cursa = [...], rinde_examen = [...])
+
+
+estado([ListaCursando, ListaCursadas, ListaAprobadas, AnioCalendario, Cuatrimestre]) :-
 
 % estados: todas las posibilidades coherentes
 %     solo se validarian
@@ -317,16 +395,4 @@ puede_aprobar_en_periodo(Codigo, A, C) :-
 % el algoritmo seria un depth limited? cual seria el estado final si lo hago parametrizable?
 % si la entrada es el estado actual + parametros que limitan las transiciones, 
 
-
-
-
-
-
-:- begin_tests(planificador).
-
-test(cantidad_total_cursadas) :-
-    cantidad_total_cursadas(4).
-
-
-
-:- end_tests(planificador).
+*/
