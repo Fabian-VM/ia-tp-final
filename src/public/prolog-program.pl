@@ -1,76 +1,3 @@
-/*
-PRIMER AÑO
-| Código | Asignatura                                | Período de Cursado | Semanal   | Total | Correlativa Anterior |
-| ------ | ----------------------------------------- | ------------------ | --------- | ----- | -------------------- |
-| IF001  | Elementos de informática                  | 1º Cuat.           | 3 T - 4 P | 105   |                      |
-| MA045  | Álgebra                                   | 1º Cuat.           | 4 T - 5 P | 135   |                      |
-| IF002  | Expresión de Problemas y algoritmos       | 1º Cuat.           | 3 T - 3 P | 90    |                      |
-| IF003  | Algorítmica y Programación I              | 2º Cuat.           | 4 T - 4 P | 120   | IF002                |
-| MA046  | Análisis Matemático                       | 2º Cuat.           | 5 T - 5 P | 150   |                      |
-| MA008  | Elementos de Lógica y Matemática Discreta | 2º Cuat.           | 4 T - 4 P | 120   |                      |
-
-SEGUNDO AÑO
-| Código | Asignatura                       | Período de Cursado | Semanal   | Total | Correlativa Anterior |
-| ------ | -------------------------------- | ------------------ | --------- | ----- | -------------------- |
-| IF004  | Sistemas y Organizaciones        | 1º Cuat.           | 3 T - 3 P | 90    |                      |
-| IF005  | Arquitectura de Computadoras     | 1º Cuat.           | 4 T - 4 P | 120   | IF001                |
-| IF006  | Algorítmica y Programación II    | 1º Cuat.           | 4 T - 4 P | 120   | IF003, MA008         |
-| IF007  | Bases de Datos I                 | 2º Cuat.           | 4 T - 5 P | 135   | IF006                |
-| MA006  | Estadística                      | 2º Cuat.           | 3 T - 3 P | 90    | MA045, MA046         |
-| IF008  | Programación Orientada a Objetos | 2º Cuat.           | 4 T - 4 P | 120   | IF006                |
-
-TERCER AÑO
-| Código | Asignatura                              | Período de Cursado | Semanal   | Total | Correlativa Anterior |
-| ------ | --------------------------------------- | ------------------ | --------- | ----- | -------------------- |
-| IF009  | Laboratorio de Programación y Lenguajes | 1º Cuat.           | 6 T y P   | 90    | IF008                |
-| IF010  | Análisis y Diseño de Sistemas           | 1º Cuat.           | 4 T - 5 P | 135   | IF004, IF007         |
-| IF011  | Sistemas Operativos                     | 1º Cuat.           | 5 T - 5 P | 150   | IF005, IF006         |
-| IF012  | Desarrollo de Software                  | 2º Cuat.           | 9 T y P   | 135   | IF008, IF010         |
-| IF013  | Fundamentos Teóricos de Informática     | 2º Cuat.           | 4 T - 4 P | 120   | IF006, MA008         |
-| MA047  | Complementos Matemáticos                | 2º Cuat.           | 3 T - 3 P | 90    | MA045, MA046         |
-
-CUARTO AÑO
-| Código | Asignatura                             | Período de Cursado | Semanal   | Total | Correlativa Anterior |
-| ------ | -------------------------------------- | ------------------ | --------- | ----- | -------------------- |
-| IF015  | Ingeniería de Software                 | 1º Cuat.           | 5 T - 5 P | 150   | IF012, MA006         |
-| IF018  | Inteligencia Artificial                | 1º Cuat.           | 4 T - 4 P | 120   | IF013, MA047         |
-| IF019  | Redes y Transmisión de Datos           | 1º Cuat.           | 4 T - 5 P | 135   | IF011                |
-| IF016  | Aspectos Legales y Profesionales       | 2º Cuat.           | 4 T y P   | 60    | 15 Asignaturas       |
-| IF020  | Paradigmas y Lenguajes de Programación | 2º Cuat.           | 4 T - 4 P | 120   | IF009, IF013         |
-| IF022  | Sistemas Distribuidos                  | 2º Cuat.           | 4 T - 4 P | 120   | IF019                |
-
-QUINTO AÑO
-| Código | Asignatura                          | Período de Cursado | Semanal   | Total | Correlativa Anterior |
-| ------ | ----------------------------------- | ------------------ | --------- | ----- | -------------------- |
-| OP1    | Optativa I                          | 1º Cuat.           | ---       | 120   | (#)                  |
-| IF021  | Arquitectura de Redes y Servicios   | 1º Cuat.           | 4 T - 4 P | 120   | IF019                |
-| IF017  | Taller de Nuevas Tecnologías        | 1º Cuat.           | 6 T y P   | 90    | IF015, IF019         |
-| OP2    | Optativa II                         | 2º Cuat.           | ---       | 135   | (##)                 |
-| IF025  | Sistemas Embebidos y de Tiempo Real | 2º Cuat.           | 4 T - 4 P | 120   | IF015, IF022         |
-
-OPTATIVA I
-| Código | Asignatura             | Semanal   | Total | Correlativa Anterior |
-| ------ | ---------------------- | --------- | ----- | -------------------- |
-| IF014  | Base de Datos II       | 4 T - 4 P | 120   | IF010                |
-| IF024  | Informática Industrial | 4 T - 4 P | 120   | IF015, IF019         |
-| IF027  | Modelos y Simulación   | 3 T - 3 P | 90    | IF020                |
-
-OPTATIVA II 
-| Código | Asignatura                                         | Semanal   | Total | Correlativa Anterior |
-| ------ | -------------------------------------------------- | --------- | ----- | -------------------- |
-| IF023  | Diseño de Aplicaciones Web                         | 4 T - 5 P | 135   | IF009, IF015, IF019  |
-| IF034  | Sistemas Paralelos II                              | 4 T - 4 P | 120   | IF018                |
-| IF053  | Planificación y Gestión de Sistemas de Información | 3 T - 3 P | 90    | IF015                |
-| IF028  | Monitorización y visualización                     | 4 T - 4 P | 120   | IF024                |
-
-OTROS REQUISITOS
-| Código    | Actividad                            | Correlativa Anterior |
-| --------- | ------------------------------------ | -------------------- |
-| FA007(*)  | Acreditación de Idioma               | ---                  |
-| IF026(#)  | TESINA                               | ---                  |
-| FA102(**) | (Curso) Estrategias Comunicacionales | 10 Asignaturas       |
-| FA103(**) | (Curso) Relaciones Humanas           | 10 Asignaturas       |
-*/
 
 
 % =========== INPUT: HECHOS SOBRE EL ALUMNO ================
@@ -84,313 +11,415 @@ OTROS REQUISITOS
 % una vez esos datos cargados, mostrar la tabla de todas las asignaturas
 % para que marque y luego ponga "generar planificación"
 
-% STARTHERE Parámetros del estado
-/*
-% El estado se puede interpretar como la situación del alumno durante las vacaciones antes
-% de cualquier cuatrimestre
-Estado = [
-    Aprobadas, 
-    Cursadas, 
-    CuatrimestreProximo,
-    CantidadCursarPorCuatrimestre, 
-    CantidadAprobarPorCuatrimestre, 
-    AnioCalendarioActual
-]
-
-Aprobadas = ['IF001', 'MA045', 'IF002']
-Cursadas = ['MA046']
-CuatrimestreProximo = 1
-CantidadFinalesPorCuatrimestre = 2
-CantidadCursarPorCuatrimestre = 1
-AnioCalendarioActual = 2026
-
-Si el usuario no está en vacaciones, y esta cursando, aparecerán estos argumentos a normalizar
-La decision tomada para simplificar es que el proximo estado será que tenga las cursadas
-Eso para simplificar, porque si añado lo de poder rendir finales, tendria que
-cargar tambien el calendario académico pero eso varia por año
-
-Cursando = ['FA007', 'MA008']
-CuatrimestreActual = 2
-
-proximo_cuatrimestre(CuatrimestreActual, CuatrimestreProximo)
-append(CursadasActuales, Cursando, Cursadas)
-
-*/
 
 % =========== INPUT: HECHOS SOBRE EL PLAN DE ESTUDIOS ================
 
 % PERIODOS DETERMINADOS POR EL PLAN
-anio_academico(1).
-anio_academico(2).
-anio_academico(3).
-anio_academico(4).
-anio_academico(5).
-cuatrimestre_academico(1).
-cuatrimestre_academico(2).
-proximo_cuatrimestre(1, 2).
-proximo_cuatrimestre(2, 1).
+anio_plan(1).
+anio_plan(2).
+anio_plan(3).
+anio_plan(4).
+anio_plan(5).
+ultimo_anio_plan(5).
+cuatrimestre(1).
+cuatrimestre(2).
+% proximo_cuatrimestre(Actual, Siguiente, AnioSumado)
+proximo_cuatrimestre(1, 2, 0).
+proximo_cuatrimestre(2, 1, 1).
+periodo_plan(AnioPlan, Cuatrimestre) :-
+    anio_plan(AnioPlan),
+    cuatrimestre(Cuatrimestre).
+periodo_calendario(AnioCalendario, Cuatrimestre) :-
+    number(AnioCalendario),
+    cuatrimestre(Cuatrimestre).
+siguiente_periodo_calendario(AnioCalendarioA, CuatrimestreA, AnioCalendarioB, CuatrimestreB) :-
+    proximo_cuatrimestre(CuatrimestreA, CuatrimestreB, AnioSumado),
+    AnioCalendarioB is AnioCalendarioA + AnioSumado.
+
+% ETAPAS DE PROGRESO EN TIPOS DE ASIGNATURAS
+tipo_asignatura(acreditacion).
+tipo_asignatura(curso).
+tipo_asignatura(materia).
+tipo_asignatura(tesina).
+estado_tipo_asignatura(_, sin_iniciar).
+estado_tipo_asignatura(materia, cursada).
+estado_tipo_asignatura(tesina, proyecto_presentado).
+estado_tipo_asignatura(_, aprobada).
+% siguiente_estado_tipo_asignatura(Tipo, EstadoInicial, EstadoSiguiente, Carga).
+siguiente_estado_tipo_asignatura(materia, sin_iniciar, cursada, 6).
+siguiente_estado_tipo_asignatura(materia, cursada, aprobada, 2).
+siguiente_estado_tipo_asignatura(acreditacion, sin_iniciar, aprobada, 2).
+siguiente_estado_tipo_asignatura(curso, sin_iniciar, aprobada, 2).
+siguiente_estado_tipo_asignatura(tesina, sin_iniciar, proyecto_presentado, 2).
+siguiente_estado_tipo_asignatura(tesina, proyecto_presentado, aprobada, 8).
+asignatura_se_considera(Estado, estado_asignatura(_, Estado)).
+asignatura_se_considera(cursada, estado_asignatura(Codigo, aprobada)) :-
+    asignatura(Codigo, materia, _, _).
 
 
 % ASIGNATURAS
-% asignatura(Código, Tipo, Nombre, AnioAcademico, Cuatrimestre)
-
+% asignatura(Código, Tipo, Nombre, periodo_plan(AnioPlan, Cuatrimestre))
 % 1°
-asignatura('IF001', materia, elementos_de_informatica, 1, 1).
-asignatura('MA045', materia, algebra, 1, 1).
-asignatura('IF002', materia, expresion_de_problemas_y_algoritmos, 1, 1).
-asignatura('IF003', materia, algoritmica_y_programacion_i, 1, 2).
-asignatura('MA046', materia, analisis_matematico, 1, 2).
-asignatura('MA008', materia, elementos_de_logica_y_matematica_discreta, 1, 2).
-asignatura('FA007', curso, acreditacion_de_idioma, requisito_externo, _).
+asignatura('IF001', materia, elementos_de_informatica, periodo_plan(1, 1)).
+asignatura('MA045', materia, algebra, periodo_plan(1, 1)).
+asignatura('IF002', materia, expresion_de_problemas_y_algoritmos, periodo_plan(1, 1)).
+asignatura('IF003', materia, algoritmica_y_programacion_i, periodo_plan(1, 2)).
+asignatura('MA046', materia, analisis_matematico, periodo_plan(1, 2)).
+asignatura('MA008', materia, elementos_de_logica_y_matematica_discreta, periodo_plan(1, 2)).
+asignatura('FA007', acreditacion, acreditacion_de_idioma, periodo_plan(1, _)).
 % 2°
-asignatura('IF004', materia, sistemas_y_organizaciones, 2, 1).
-asignatura('IF005', materia, arquitectura_de_computadoras, 2, 1).
-asignatura('IF006', materia, algoritmica_y_programacion_ii, 2, 1).
-asignatura('IF007', materia, bases_de_datos_i, 2, 2).
-asignatura('MA006', materia, estadistica, 2, 2).
-asignatura('IF008', materia, programacion_orientada_a_objetos, 2, 2).
+asignatura('IF004', materia, sistemas_y_organizaciones, periodo_plan(2, 1)).
+asignatura('IF005', materia, arquitectura_de_computadoras, periodo_plan(2, 1)).
+asignatura('IF006', materia, algoritmica_y_programacion_ii, periodo_plan(2, 1)).
+asignatura('IF007', materia, bases_de_datos_i, periodo_plan(2, 2)).
+asignatura('MA006', materia, estadistica, periodo_plan(2, 2)).
+asignatura('IF008', materia, programacion_orientada_a_objetos, periodo_plan(2, 2)).
 % 3°
-asignatura('IF009', materia, laboratorio_de_programacion_y_lenguajes, 3, 1).
-asignatura('IF010', materia, analisis_y_diseno_de_sistemas, 3, 1).
-asignatura('IF011', materia, sistemas_operativos, 3, 1).
-asignatura('IF012', materia, desarrollo_de_software, 3, 2).
-asignatura('IF013', materia, fundamentos_teoricos_de_informatica, 3, 2).
-asignatura('MA047', materia, complementos_matematicos, 3, 2).
-asignatura('FA102', curso, estrategias_comunicacionales, curso, _).
-asignatura('FA103', curso, relaciones_humanas, curso, _).
+asignatura('IF009', materia, laboratorio_de_programacion_y_lenguajes, periodo_plan(3, 1)).
+asignatura('IF010', materia, analisis_y_diseno_de_sistemas, periodo_plan(3, 1)).
+asignatura('IF011', materia, sistemas_operativos, periodo_plan(3, 1)).
+asignatura('IF012', materia, desarrollo_de_software, periodo_plan(3, 2)).
+asignatura('IF013', materia, fundamentos_teoricos_de_informatica, periodo_plan(3, 2)).
+asignatura('MA047', materia, complementos_matematicos, periodo_plan(3, 2)).
+asignatura('FA102', curso, estrategias_comunicacionales, periodo_plan(3, 2)).
+asignatura('FA103', curso, relaciones_humanas, periodo_plan(3, 2)).
 % 4°
-asignatura('IF015', materia, ingenieria_de_software, 4, 1).
-asignatura('IF018', materia, inteligencia_artificial, 4, 1).
-asignatura('IF019', materia, redes_y_transmision_de_datos, 4, 1).
-asignatura('IF016', materia, aspectos_legales_y_profesionales, 4, 2).
-asignatura('IF020', materia, paradigmas_y_lenguajes_de_programacion, 4, 2).
-asignatura('IF022', materia, sistemas_distribuidos, 4, 2).
+asignatura('IF015', materia, ingenieria_de_software, periodo_plan(4, 1)).
+asignatura('IF018', materia, inteligencia_artificial, periodo_plan(4, 1)).
+asignatura('IF019', materia, redes_y_transmision_de_datos, periodo_plan(4, 1)).
+asignatura('IF016', materia, aspectos_legales_y_profesionales, periodo_plan(4, 2)).
+asignatura('IF020', materia, paradigmas_y_lenguajes_de_programacion, periodo_plan(4, 2)).
+asignatura('IF022', materia, sistemas_distribuidos, periodo_plan(4, 2)).
 % 5°
-asignatura('IF021', materia, arquitectura_de_redes_y_servicios, 5, 1).
-asignatura('IF017', materia, taller_de_nuevas_tecnologias, 5, 1).
-asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, 5, 2).
-asignatura('IF026', tesina, tesina, 5, _).
-% STARTHERE Optativas hardcodeadas
-%asignatura('OP1', optativa, optativa_i, 5, 1).
-%asignatura('OP2', optativa, optativa_ii, 5, 2).
-asignatura('IF024', materia, informatica_industrial, 5, 1).
-asignatura('IF028', materia, monitorizacion_y_visualizacion, 5, 2).
-
+asignatura('IF021', materia, arquitectura_de_redes_y_servicios, periodo_plan(5, 1)).
+asignatura('IF017', materia, taller_de_nuevas_tecnologias, periodo_plan(5, 1)).
+asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, periodo_plan(5, 2)).
+asignatura('IF026', tesina, tesina, periodo_plan(5, _)).
+% Optativas hardcodeadas
+asignatura('IF024', materia, informatica_industrial, periodo_plan(5, 1)).
+asignatura('IF028', materia, monitorizacion_y_visualizacion, periodo_plan(5, 2)).
 
 
 % REQUISITOS
 % requisito(Codigo, requiere(Requisito))
-requisito('IF003', requiere(cursada, 'IF002')).
-requisito('IF005', requiere(cursada, 'IF001')).
-requisito('IF006', requiere(cursada, 'IF003')).
-requisito('IF006', requiere(cursada, 'MA008')).
-requisito('IF007', requiere(cursada, 'IF006')).
-requisito('MA006', requiere(cursada, 'MA045')).
-requisito('MA006', requiere(cursada, 'MA046')).
-requisito('IF008', requiere(cursada, 'IF006')).
-requisito('IF009', requiere(cursada, 'IF008')).
-requisito('IF010', requiere(cursada, 'IF004')).
-requisito('IF010', requiere(cursada, 'IF007')).
-requisito('IF011', requiere(cursada, 'IF005')).
-requisito('IF011', requiere(cursada, 'IF006')).
-requisito('IF012', requiere(cursada, 'IF008')).
-requisito('IF012', requiere(cursada, 'IF010')).
-requisito('IF013', requiere(cursada, 'IF006')).
-requisito('IF013', requiere(cursada, 'MA008')).
-requisito('MA047', requiere(cursada, 'MA045')).
-requisito('MA047', requiere(cursada, 'MA046')).
-requisito('IF015', requiere(cursada, 'IF012')).
-requisito('IF015', requiere(cursada, 'MA006')).
-requisito('IF018', requiere(cursada, 'IF013')).
-requisito('IF018', requiere(cursada, 'MA047')).
-requisito('IF019', requiere(cursada, 'IF011')).
-requisito('IF020', requiere(cursada, 'IF009')).
-requisito('IF020', requiere(cursada, 'IF013')).
-requisito('IF022', requiere(cursada, 'IF019')).
-requisito('IF021', requiere(cursada, 'IF019')).
-requisito('IF017', requiere(cursada, 'IF015')).
-requisito('IF017', requiere(cursada, 'IF019')).
-requisito('IF025', requiere(cursada, 'IF015')).
-requisito('IF025', requiere(cursada, 'IF022')).
-requisito('IF016', requiere(cantidad_minima_aprobadas, 15)).
-requisito('FA102', requiere(cantidad_minima_aprobadas, 10)).
-requisito('FA103', requiere(cantidad_minima_aprobadas, 10)).
-requisito('IF026', requiere(posee_periodo_aprobado, 4, _)).
-requisito('IF026', requiere(posee_periodo_cursado, 5, 1)).
-requisito(Codigo, requiere(aprobada, 'FA007')) :-
-    anio_academico(AnioAcademico),
-    AnioAcademico >= 2,
-    asignatura(Codigo, _, _, AnioAcademico, _).
-requisito(Codigo, requiere(aprobada, 'FA102')) :-
-    anio_academico(AnioAcademico),
-    AnioAcademico >= 5,
-    asignatura(Codigo, _, _, AnioAcademico, _).
-requisito(Codigo, requiere(aprobada, 'FA103')) :-
-    anio_academico(AnioAcademico),
-    AnioAcademico >= 5,
-    asignatura(Codigo, _, _, AnioAcademico, _).
-requisito(Codigo, requiere(aprobada, Precorrelativa)) :- 
-    asignatura(Codigo, _, _, _, _), 
-    asignatura(Precorrelativa, _, _, _, _), 
-    requisito(Codigo, requiere(cursada, Correlativa)), 
-    requisito(Correlativa, requiere(cursada, Precorrelativa)).
-% STARTHERE optativas hardcodeadas
-requisito('IF024', requiere(cursada, 'IF015')).
-requisito('IF024', requiere(cursada, 'IF019')).
-requisito('IF028', requiere(cursada, 'IF024')).
-
-
-% FILTROS
-asignaturas_por_filtros(Tipo, AnioAcademico, CuatrimestreAcademico, Lista) :-
-    findall(Codigo, asignatura(Codigo, Tipo, _, AnioAcademico, Cuatrimestre), Lista).
-
-cantidad_asignaturas_por_filtro(Tipo, AnioAcademico, CuatrimestreAcademico, Cantidad) :-
-    asignaturas_por_filtros(Tipo, AnioAcademico, CuatrimestreAcademico, Lista),
-    length(Lista, Cantidad).
-
-
-% ATAJOS
-% STARTHERE Probablemente convenga dejar el contenido adentro del cumplimientod e requistos
-% porque por si mismos hasta ahora no tienen sentido de ser
-contar_cursadas(Aprobadas, Cursadas, N) :-
-    length(Aprobadas, X),
-    length(Cursadas, Y),
-    N is X + Y.
-
-contar_aprobadas(Aprobadas, N) :-
-    length(Aprobadas, N).
-
-posee_periodo_cursado(AnioAcademico, CuatrimestreAcademico, Aprobadas, Cursadas) :-
-    contar_cursadas(Aprobadas, Cursadas, CantidadCursadas),
-    cantidad_asignaturas_por_filtro(_, AnioAcademico, CuatrimestreAcademico, CantidadAsignaturas),
-    CantidadCursadas = CantidadAsignaturas.
-
-posee_periodo_aprobado(AnioAcademico, CuatrimestreAcademico, Aprobadas) :-
-    contar_aprobadas(Aprobadas, N),
-    cantidad_asignaturas_por_filtro(_, AnioAcademico, CuatrimestreAcademico, CantidadAsignaturas),
-    CantidadCursadas = CantidadAsignaturas.
-
+requisito(cursada, 'IF003', requiere(cursada, 'IF002')).
+requisito(cursada, 'IF005', requiere(cursada, 'IF001')).
+requisito(cursada, 'IF006', requiere(cursada, 'IF003')).
+requisito(cursada, 'IF006', requiere(cursada, 'MA008')).
+requisito(cursada, 'IF007', requiere(cursada, 'IF006')).
+requisito(cursada, 'MA006', requiere(cursada, 'MA045')).
+requisito(cursada, 'MA006', requiere(cursada, 'MA046')).
+requisito(cursada, 'IF008', requiere(cursada, 'IF006')).
+requisito(cursada, 'IF009', requiere(cursada, 'IF008')).
+requisito(cursada, 'IF010', requiere(cursada, 'IF004')).
+requisito(cursada, 'IF010', requiere(cursada, 'IF007')).
+requisito(cursada, 'IF011', requiere(cursada, 'IF005')).
+requisito(cursada, 'IF011', requiere(cursada, 'IF006')).
+requisito(cursada, 'IF012', requiere(cursada, 'IF008')).
+requisito(cursada, 'IF012', requiere(cursada, 'IF010')).
+requisito(cursada, 'IF013', requiere(cursada, 'IF006')).
+requisito(cursada, 'IF013', requiere(cursada, 'MA008')).
+requisito(cursada, 'MA047', requiere(cursada, 'MA045')).
+requisito(cursada, 'MA047', requiere(cursada, 'MA046')).
+requisito(cursada, 'IF015', requiere(cursada, 'IF012')).
+requisito(cursada, 'IF015', requiere(cursada, 'MA006')).
+requisito(cursada, 'IF018', requiere(cursada, 'IF013')).
+requisito(cursada, 'IF018', requiere(cursada, 'MA047')).
+requisito(cursada, 'IF019', requiere(cursada, 'IF011')).
+requisito(cursada, 'IF020', requiere(cursada, 'IF009')).
+requisito(cursada, 'IF020', requiere(cursada, 'IF013')).
+requisito(cursada, 'IF022', requiere(cursada, 'IF019')).
+requisito(cursada, 'IF021', requiere(cursada, 'IF019')).
+requisito(cursada, 'IF017', requiere(cursada, 'IF015')).
+requisito(cursada, 'IF017', requiere(cursada, 'IF019')).
+requisito(cursada, 'IF025', requiere(cursada, 'IF015')).
+requisito(cursada, 'IF025', requiere(cursada, 'IF022')).
+requisito(aprobada, 'FA102', requiere(cantidad_minima_aprobadas, 10)).
+requisito(aprobada, 'FA103', requiere(cantidad_minima_aprobadas, 10)).
+requisito(cursada, 'IF016', requiere(cantidad_minima_aprobadas, 15)).
+% Optativas hardcodeadas
+requisito(cursada, 'IF024', requiere(cursada, 'IF015')).
+requisito(cursada, 'IF024', requiere(cursada, 'IF019')).
+requisito(cursada, 'IF028', requiere(cursada, 'IF024')).
+% Tesina
+requisito(proyecto_presentado, 'IF026', requiere(cursada, Codigo)) :-
+    asignatura(Codigo, materia, _, periodo_plan(4, _)).
+requisito(aprobada, 'IF026', requiere(aprobada, Codigo)) :-
+    asignatura(Codigo, _, _, periodo_plan(4, _)).
+requisito(aprobada, 'IF026', requiere(cursada, Codigo)) :-
+    asignatura(Codigo, materia, _, periodo_plan(5, 1)).
+requisito(aprobada, 'IF026', requiere(aprobada, Codigo)) :-
+    asignatura(Codigo, curso, _, periodo_plan(5, 1)).
+% Bloqueos por acreditaciones
+requisito(cursada, Codigo, requiere(aprobada, 'FA007')) :-
+    anio_plan(AnioPlan),
+    AnioPlan >= 2,
+    asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
+% Bloqueos por cursos
+requisito(cursada, Codigo, requiere(aprobada, 'FA102')) :-
+    anio_plan(AnioPlan),
+    AnioPlan >= 5,
+    asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
+requisito(cursada, Codigo, requiere(aprobada, 'FA103')) :-
+    anio_plan(AnioPlan),
+    AnioPlan >= 5,
+    asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
+% Reglas generales
+requisito(aprobada, Codigo, requiere(cursada, Codigo)) :-
+    asignatura(Codigo, materia, _, _).
+requisito(aprobada, Codigo, requiere(aprobada, Correlativa)) :- 
+    asignatura(Codigo, _, _, _), 
+    asignatura(Correlativa, _, _, _), 
+    requisito(cursada, Codigo, requiere(cursada, Correlativa)).
+requisito(cursada, Codigo, requiere(aprobada, Precorrelativa)) :- 
+    asignatura(Codigo, _, _, _), 
+    asignatura(Precorrelativa, _, _, _), 
+    requisito(cursada, Codigo, requiere(cursada, Correlativa)), 
+    requisito(cursada, Correlativa, requiere(cursada, Precorrelativa)).
+requisito(aprobada, Codigo, requiere(proyecto_presentado, Codigo)) :-
+    asignatura(Codigo, tesina, _, _).
 
 
 
 % =========== REGLAS SOBRE EL PLAN DE ESTUDIOS ================
 
 % CUMPLIMIENTO DE REQUISITOS
-cumple_este_requisito(requiere(cursada, Codigo), Aprobadas, Cursadas) :-
-    member(Codigo, Aprobadas);
-    member(Codigo, Cursadas).
-
-cumple_este_requisito(requiere(aprobada, Codigo), Aprobadas, _) :-
-    member(Codigo, Aprobadas).
-
-cumple_este_requisito(requiere(cantidad_minima_aprobadas, CantidadMinima), Aprobadas, _) :-
-    contar_aprobadas(Aprobadas, CantidadAprobadas),
+% No son generativos, solo validan dadas las entradas
+cumple_este_requisito(requiere(EstadoDeseado, Codigo), EstadosAsignaturas) :-
+    member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
+    asignatura_se_considera(EstadoDeseado, estado_asignatura(Codigo, EstadoReal)).
+cumple_este_requisito(requiere(cantidad_minima_aprobadas, CantidadMinima), EstadosAsignaturas) :-
+    findall(Codigo, (
+        member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
+        asignatura_se_considera(aprobada, estado_asignatura(Codigo, EstadoReal))
+    ), Lista),
+    length(Lista, CantidadAprobadas),
     CantidadAprobadas >= CantidadMinima.
+cumple_estos_requisitos([], _).
+cumple_estos_requisitos([Requisito|RestoRequisitos], EstadosAsignaturas) :-
+    cumple_este_requisito(Requisito, EstadosAsignaturas),
+    cumple_estos_requisitos(RestoRequisitos, EstadosAsignaturas).
 
-cumple_este_requisito(requiere(posee_periodo_cursado, AnioAcademico, CuatrimestreAcademico), Aprobadas, Cursadas) :-
-    posee_periodo_cursado(AnioAcademico, CuatrimestreAcademico, Aprobadas, Cursadas).
-
-cumple_este_requisito(requiere(posee_periodo_aprobado, AnioAcademico, CuatrimestreAcademico), Aprobadas, _) :-
-    posee_periodo_aprobado(AnioAcademico, CuatrimestreAcademico, Aprobadas).
-
-cumple_estos_requisitos([], _, _).
-cumple_estos_requisitos([Requisito|RestoRequisitos], Aprobadas, Cursadas) :-
-    cumple_este_requisito(Requisito, Aprobadas, Cursadas),
-    cumple_estos_requisitos(RestoRequisitos, Aprobada, Cursadas).
-
-cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas) :-
-    findall(Requisito, requisito(Codigo, Requisito), ListaRequisitos),
-    cumple_estos_requisitos(ListaRequisitos, Aprobadas, Cursadas).
+verificar_requisitos_para(estado_asignatura(Codigo, EstadoDeseado), EstadosAsignaturas) :-
+    findall(Requisito, requisito(EstadoDeseado, Codigo, Requisito), ListaRequisitos),
+    cumple_estos_requisitos(ListaRequisitos, EstadosAsignaturas).
 
 
+% CALCULO DE AVANCES
+% Generan o validan, dada la lista de EstadosAsignatura
+% STARTHERE Refactorizar esto para usar la estructura avance()
 
 
+valor(estado_asignatura(Codigo, Estado), Valor) :-
+    asignatura(Codigo, _, _, periodo_plan(AnioPlan, Cuatrimestre)),
+    desbloqueos_transitivos([estado_asignatura(Codigo, Estado)], Desbloqueadas),
+    length(Desbloqueadas, N),
+    valor_periodo_plan(AnioPlan, Cuatrimestre, M),
+    Valor is N*1 + M*0.
 
-% CALCULO DE POSIBLES AVANCES
-puede_cursar_en_cuatrimestre(Aprobadas, Cursadas, CuatrimestreAcademico, ListaCodigos) :-
-    findall(Codigo, (
-        asignatura(Codigo, _, _, _, CuatrimestreAcademico),
-        not(member(Codigo, Cursadas)),
-        not(member(Codigo, Aprobadas)),
-        cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas)
-    ), ListaCodigos).
+valor_periodo_plan(AnioPlan, Cuatrimestre, Valor) :-
+    nonvar(Cuatrimestre),
+    ultimo_anio_plan(UltimoAnioPlan),
+    Valor is (UltimoAnioPlan - AnioPlan)*2 + Cuatrimestre + 1.
 
-puede_aprobar_en_cuatrimestre(Aprobadas, Cursadas, CuatrimestreAcademico, ListaCodigos) :-
-    findall(Codigo, (
-        asignatura(Codigo, materia, _, _, CuatrimestreAcademico),
-        member(Codigo, Cursadas),
-        not(member(Codigo, Aprobadas)),
-        cumple_todos_los_requisitos(Codigo, Aprobadas, Cursadas)
-    ), ListaCodigos).
+valor_periodo_plan(AnioPlan, Cuatrimestre, Valor) :-
+    var(Cuatrimestre),
+    ultimo_anio_plan(UltimoAnioPlan),
+    Valor is (UltimoAnioPlan - AnioPlan)*2 + 1.
+
+desbloqueos_transitivos([], []) :- !.
+
+desbloqueos_transitivos(Lista, Resultado) :-
+    expandir_lista(Lista, ExpansionSiguiente),
+    desbloqueos_transitivos(ExpansionSiguiente, ResultadoParcial),
+    append(Lista, ResultadoParcial, X),
+    list_to_set(X, Resultado).
+
+expandir_lista([], []) :- !.
+
+expandir_lista([EstadoAsignatura|Resto], Resultado) :-
+    expandir(EstadoAsignatura, Expansion),
+    expandir_lista(Resto, RestoExpansion),
+    append(Expansion, RestoExpansion, X),
+    list_to_set(X, Resultado).
+
+expandir(estado_asignatura(C1, E1), Expansion) :-
+    findall(estado_asignatura(C2, E2), requisito(E2, C2, requiere(E1, C1)), Expansion).
 
 
+% STARTHERE acá hay un problemon de separacion
 /*
-
-Estado = [
-    Aprobadas, 
-    Cursadas, 
-    CuatrimestreProximo,
-    CantidadCursarPorCuatrimestre, 
-    CantidadAprobarPorCuatrimestre, 
-    AnioCalendarioActual
-]
-avance_posible(
-    Aprobadas, 
-    Cursadas, 
-    CuatrimestreProximo,
-    CantidadCursarPorCuatrimestre,
-    CantidadAprobarPorCuatrimestre,
-    [AvanceCursadas, AvanceAprobaciones]
-) :-
-    cuatrimestre_academico(CuatrimestreProximo),
-    puede_cursar_en_cuatrimestre(Codigo, CuatrimestreProximo),
-    puede_aprobar_en_cuatrimestre(Codigo, CuatrimestreProximo),
-
-    findall(Codigo, puede_cursar_en_cuatrimestre(Codigo, CuatrimestreSiguiente), CursarDespues),
-    length(CursarDespues, X),
-    cantidad_cursar_por_cuatrimestre(LimiteCursadas),
-    X =< 
 
 */
+puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas) :-
+    asignatura(Codigo, Tipo, _, periodo_plan(_, Cuatrimestre)),
+    (
+        Tipo = materia, NuevoEstado = cursada;
+        Tipo = curso, NuevoEstado = aprobada
+    ),
+    member(estado_asignatura(Codigo, EstadoActual), EstadosAsignaturas),
+    siguiente_estado_tipo_asignatura(Tipo, EstadoActual, NuevoEstado, Carga),
+    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
 
-% =========== REGLAS ALGORÍTMICAS ================
+puede_avanzar(Codigo, NuevoEstado, _, Carga, EstadosAsignaturas) :-
+    asignatura(Codigo, Tipo, _, _),
+    member(estado_asignatura(Codigo, EstadoActual), EstadosAsignaturas),
+    siguiente_estado_tipo_asignatura(Tipo, EstadoActual, NuevoEstado, Carga),
+    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
 
-/*
-% el estado inicial debe tomar el input del usuario y normalizarlo
-estado_inicial([ListaCursando, ListaCursadas, ListaAprobadas, AnioCalendario, Cuatrimestre]) :-
-    findall(Codigo, cursando(Codigo), ListaCursando),
-    findall(Codigo, cursada(Codigo), ListaCursadas),
-    findall(Codigo, aprobada(Codigo), ListaAprobadas),
-    cuatrimestre_actual(Cuatrimestre),
-    anio_calendario_actual(AnioCalendario).
+puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas) :-
+    asignatura(Codigo, Tipo, _, periodo_plan(_, Cuatrimestre)),
+    not(member(estado_asignatura(Codigo, _), EstadosAsignaturas)),
+    siguiente_estado_tipo_asignatura(Tipo, sin_iniciar, NuevoEstado, Carga),
+    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
 
-estado_final([[], [], ListaAprobadas, _, Cuatrimestre]) :-
-    findall(Codigo, asignatura(Codigo, _, _, _, _), ListaAsignaturas),
-    ListaAsignaturas = ListaAprobadas,
-    cuatrimestre_academico(Cuatrimestre).
+avances_posibles(
+    estado(EstadosAsignaturas, proximo_periodo_calendario(_, Cuatrimestre)),
+    AvancesAsignaturasPosibles
+) :-
+    findall(avance(estado_asignatura(Codigo, NuevoEstado), Valor, Carga), 
+    (
+        puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas),
+        valor(estado_asignatura(Codigo, NuevoEstado), Valor)
+    ), AvancesAsignaturasPosibles).
 
+
+
+
+% =========== ALGORITMO DE BÚSQUEDA ================
+
+
+% UTILIDADES
+reemplazar_estados(Original, Reemplazos, Resultado) :-
+    foldl(reemplazar_estado, Reemplazos, Original, Resultado).
+reemplazar_estado(estado_asignatura(Codigo, NuevoEstado), Lista, Resultado) :-
+    select(estado_asignatura(Codigo, _), Lista, Resto),
+    !,
+    Resultado = [estado_asignatura(Codigo, NuevoEstado)|Resto].
+reemplazar_estado(Estado, Lista, [Estado|Lista]).
+
+ordenar_avances(Lista, Ordenada) :-
+    map_list_to_pairs(valor_avance_negativo, Lista, Pares),
+    keysort(Pares, ParesOrdenados),
+    pairs_values(ParesOrdenados, Ordenada).
+
+valor_avance_negativo(avance(_, Valor, _), Clave) :-
+    Clave is -Valor.
+
+seleccionar_avances([], _, []).
+seleccionar_avances([avance(X, Valor, Carga)|RestoAvances], CargaMaxima, [avance(X, Valor, Carga)|Seleccionados]) :-
+    Carga =< CargaMaxima,
+    NuevaCargaMaxima is CargaMaxima - Carga,
+    seleccionar_avances(RestoAvances, NuevaCargaMaxima, Seleccionados).
+seleccionar_avances([avance(_, _, Carga)|RestoAvances], CargaMaxima, Seleccionados) :-
+    Carga > CargaMaxima,
+    seleccionar_avances(RestoAvances, CargaMaxima, Seleccionados).
+
+
+% ALGORITMO DE BÚSQUEDA
+% Esto debe venir del input del usuario
+estado_inicial(estado([], proximo_periodo_calendario(2023, 1))).
+
+estado(estado(EstadosAsignaturas, proximo_periodo_calendario(_, _))) :-
+    forall(member(estado_asignatura(Codigo, Estado), EstadosAsignaturas), (
+        asignatura(Codigo, Tipo, _, _),
+        estado_tipo_asignatura(Tipo, Estado),
+        verificar_requisitos_para(estado_asignatura(Codigo, Estado), EstadosAsignaturas))
+    ).
+
+estado_final(estado(EstadosAsignaturas, proximo_periodo_calendario(_, _))) :-
+    findall(estado_asignatura(Codigo, aprobada), asignatura(Codigo, _, _, _), EstadosAsignaturas).
 
 transicion(
-    [ListaCursandoA, ListaCursadasA, ListaAprobadasA, AnioCalendarioA, CuatrimestreA],
-    [ListaCursandoB, ListaCursadasB, ListaAprobadasB, AnioCalendarioB, CuatrimestreB],
-    [AvanceCursadas, AvanceAprobaciones]
+    estado(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA)),
+    CapacidadCarga,
+    AvancesElegidos,
+    estado(EstadosAsignaturasB, proximo_periodo_calendario(AnioB, CuatrimestreB))
 ) :-
-    estado([ListaCursandoA, ListaCursadasA, ListaAprobadasA, AnioCalendarioA, CuatrimestreA]),
-    avance_posible([AvanceCursadas, AvanceAprobaciones]),
+    % Elegir los mejores avances posibles dentro de la capacidad de carga del alumno
+    avances_posibles(
+        estado(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA)),
+        AvancesPosibles
+    ),
+    %mostrar_avances(AvancesPosibles),
+    ordenar_avances(AvancesPosibles, AvancesPosiblesOrdenados),
+    seleccionar_avances(AvancesPosiblesOrdenados, CapacidadCarga, AvancesElegidos),
+
+    % Generar el nuevo estado
+    findall(Estado, member(avance(Estado, _, _), AvancesElegidos), NuevosEstadosAsignaturas),
+    reemplazar_estados(EstadosAsignaturasA, NuevosEstadosAsignaturas, EstadosAsignaturasB),
+    siguiente_periodo_calendario(AnioA, CuatrimestreA, AnioB, CuatrimestreB).
 
 
-%     todas las posibles cosas que se pueden hacer en una corsada
-%     similar a lo de viajes, seria "cursada?"
-%     estudia(cursa = [...], rinde_examen = [...])
+depth_limited_search(Profundidad) :-
+    estado_inicial(EstadoInicial),
+    mostrar_estado(EstadoInicial),
+    depth_limited_search([], [], EstadoInicial, Profundidad, SolucionEstados, SolucionAvances),
+    length(SolucionAvances, Contador).
+    %mostrar_solucion(SolucionAvances, SolucionEstados, Contador).
+
+depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, _, [EstadoOrigen|EstadosCamino], AvancesCamino) :- 
+    EstadoOrigen = estado(EstadosAsignaturasOrigen, _),
+    estado_final(estado(EstadosAsignaturasFinal, _)),
+    sort(EstadosAsignaturasOrigen, A),
+    sort(EstadosAsignaturasFinal, B),
+    A = B.
+
+depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, Profundidad, SolucionEstados, SolucionAvances) :-
+    Profundidad > 0,
+    transicion(EstadoOrigen, 25, AvancesElegidos, EstadoDestino),
+    \+ member(EstadoDestino, EstadosCamino),
+    ProfundidadNueva is Profundidad - 1,
+    mostrar_avances(AvancesElegidos),
+    mostrar_estado(EstadoDestino),
+    depth_limited_search([EstadoOrigen|EstadosCamino], [AvancesElegidos|AvancesCamino], EstadoDestino, ProfundidadNueva, SolucionEstados, SolucionAvances).
+
+/*
+mostrar_solucion([AvancesElegidos|RestoAvances], [Estado|RestoEstados], Contador) :-
+    NuevoContador is Contador - 1,
+    mostrar_solucion(RestoAvances, RestoEstados, NuevoContador),
+    mostrar_avances(AvancesElegidos),
+    writeln(''),
+    format('  ESTADO N.° ~w ~n', [Contador]),
+    writeln('|---------------------------------|'),
+    mostrar_estado(Estado),
+    writeln('|---------------------------------|'),
+    writeln('').
+*/
+mostrar_avances(AvancesElegidos) :-
+    writeln('Avance:'),
+    forall(member(avance(estado_asignatura(Codigo, Estado), Valor, Carga), AvancesElegidos), (
+        asignatura(Codigo, _, Nombre, _),
+        format('[~w](~dp, ~dc) ~w      ~w        ~n', [Codigo, Valor, Carga, Estado, Nombre])
+    )).
+
+mostrar_estado(estado(EstadosAsignaturas, proximo_periodo_calendario(AnioCalendario, Cuatrimestre))) :-
+    writeln('Estado:'),
+    forall(member(estado_asignatura(Codigo, Estado), EstadosAsignaturas), (
+        asignatura(Codigo, _, Nombre, _),
+        format('[~w] ~w      ~w ~n', [Codigo, Estado, Nombre])
+    )),
+    format('Próximo periodo: ~d ~d° cuatrimestre~n~n', [AnioCalendario, Cuatrimestre]).
 
 
-estado([ListaCursando, ListaCursadas, ListaAprobadas, AnioCalendario, Cuatrimestre]) :-
 
-% estados: todas las posibilidades coherentes
-%     solo se validarian
-%     estado origen + transicion = estado destino
 
-% estado final: todas las listas completas (bagof todas las asignaturas)
+/*
+
+transicion(
+    estado([
+        estado_asignatura('MA045', aprobada), 
+        estado_asignatura('MA046', aprobada),
+        estado_asignatura('MA008', aprobada),
+        estado_asignatura('IF001', aprobada),
+        estado_asignatura('IF002', aprobada),
+        estado_asignatura('IF003', aprobada),
+        estado_asignatura('FA007', aprobada)
+    ], proximo_periodo_calendario(2024, 1)),
+    10,
+    AvancesElegidos,
+    estado(EstadosAsignaturasB, proximo_periodo_calendario(AnioB, CuatrimestreB))
+).
 
 % el algoritmo seria un depth limited? cual seria el estado final si lo hago parametrizable?
 % si la entrada es el estado actual + parametros que limitan las transiciones, 
