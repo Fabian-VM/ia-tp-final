@@ -3,16 +3,28 @@
 % =========== INPUT: HECHOS SOBRE EL ALUMNO ================
 
 % Validaciones a agregar durante el cargado del JSON
-% - No deben haber correlatividades circulares
-% - Un estado por código, un código no puede tener más de un estado acá
-% - Lo que está cursando debe estar acorde al cuatrimestre actual
+% - Lo que está cursando debe estar acorde al cuatrimestre actual, y se debe normalizar a "cursada" 
+%   en el estado inicial, y el cuatrimestre +1 para siguiente cuatrimestre
 
-% tambien se le deben pedir las optativas a elegir
-% una vez esos datos cargados, mostrar la tabla de todas las asignaturas
-% para que marque y luego ponga "generar planificación"
+:- dynamic capacidad_carga_alumno/1.
+:- dynamic proximo_periodo_plan_alumno/2.
+:- dynamic estados_asignaturas_alumno/1.
+:- dynamic optativa_elegida_i/1.
+:- dynamic optativa_elegida_ii/1.
 
+/*
+capacidad_carga_alumno(25).
+proximo_periodo_plan_alumno(2023, 1).
+estados_asignaturas_alumno([
+    estado_asignatura('IF001',cursada),
+    estado_asignatura('IF002',cursada),
+    estado_asignatura('FA007',aprobada)
+]).
+optativa_elegida_i('IF024').
+optativa_elegida_ii('IF028').
+*/
 
-% =========== INPUT: HECHOS SOBRE EL PLAN DE ESTUDIOS ================
+% =========== INPUT: LICENCIATURA EN INFORMÁTICA (2010) ================
 
 % PERIODOS DETERMINADOS POR EL PLAN
 anio_plan(1).
@@ -95,10 +107,17 @@ asignatura('IF021', materia, arquitectura_de_redes_y_servicios, periodo_plan(5, 
 asignatura('IF017', materia, taller_de_nuevas_tecnologias, periodo_plan(5, 1)).
 asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, periodo_plan(5, 2)).
 asignatura('IF026', tesina, tesina, periodo_plan(5, _)).
-% Optativas hardcodeadas
-asignatura('IF024', materia, informatica_industrial, periodo_plan(5, 1)).
-asignatura('IF028', materia, monitorizacion_y_visualizacion, periodo_plan(5, 2)).
-
+% Optativas 
+%asignatura('IF024', materia, informatica_industrial, periodo_plan(5, 1)).
+%asignatura('IF028', materia, monitorizacion_y_visualizacion, periodo_plan(5, 2)).
+% Asignaturas optativas
+asignatura('IF014', materia, base_de_datos_ii, 5, 1) :- optativa_elegida_i('IF014').
+asignatura('IF024', materia, informatica_industrial, 5, 1) :- optativa_elegida_i('IF024').
+asignatura('IF027', materia, modelos_y_simulacion, 5, 1) :- optativa_elegida_i('IF027').
+asignatura('IF023', materia, diseno_de_aplicaciones_web, 5, 2) :- optativa_elegida_ii('IF023').
+asignatura('IF034', materia, sistemas_paralelos_ii, 5, 2) :- optativa_elegida_ii('IF034').
+asignatura('IF053', materia, planificacion_y_gestion_si, 5, 2) :- optativa_elegida_ii('IF053').
+asignatura('IF028', materia, monitorizacion_y_visualizacion, 5, 2) :- optativa_elegida_ii('IF028').
 
 % REQUISITOS
 % requisito(Codigo, requiere(Requisito))
@@ -137,10 +156,21 @@ requisito(cursada, 'IF025', requiere(cursada, 'IF022')).
 requisito(aprobada, 'FA102', requiere(cantidad_minima_aprobadas, 10)).
 requisito(aprobada, 'FA103', requiere(cantidad_minima_aprobadas, 10)).
 requisito(cursada, 'IF016', requiere(cantidad_minima_aprobadas, 15)).
-% Optativas hardcodeadas
-requisito(cursada, 'IF024', requiere(cursada, 'IF015')).
-requisito(cursada, 'IF024', requiere(cursada, 'IF019')).
-requisito(cursada, 'IF028', requiere(cursada, 'IF024')).
+% Optativas
+%requisito(cursada, 'IF024', requiere(cursada, 'IF015')).
+%requisito(cursada, 'IF024', requiere(cursada, 'IF019')).
+%requisito(cursada, 'IF028', requiere(cursada, 'IF024')).
+% Correlatividades de optativas
+requisito(cursada, 'IF014', requiere(cursada, 'IF010')) :- optativa_elegida_i('IF014').
+requisito(cursada, 'IF024', requiere(cursada, 'IF015')) :- optativa_elegida_i('IF024').
+requisito(cursada, 'IF024', requiere(cursada, 'IF019')) :- optativa_elegida_i('IF024').
+requisito(cursada, 'IF027', requiere(cursada, 'IF020')) :- optativa_elegida_i('IF027').
+requisito(cursada, 'IF023', requiere(cursada, 'IF009')) :- optativa_elegida_ii('IF023').
+requisito(cursada, 'IF023', requiere(cursada, 'IF015')) :- optativa_elegida_ii('IF023').
+requisito(cursada, 'IF023', requiere(cursada, 'IF019')) :- optativa_elegida_ii('IF023').
+requisito(cursada, 'IF034', requiere(cursada, 'IF018')) :- optativa_elegida_ii('IF034').
+requisito(cursada, 'IF053', requiere(cursada, 'IF015')) :- optativa_elegida_ii('IF053').
+requisito(cursada, 'IF028', requiere(cursada, 'IF024')) :- optativa_elegida_ii('IF028').
 % Tesina
 requisito(proyecto_presentado, 'IF026', requiere(cursada, Codigo)) :-
     asignatura(Codigo, materia, _, periodo_plan(4, _)).
@@ -286,7 +316,7 @@ avances_posibles(
 
 
 
-% =========== ALGORITMO DE BÚSQUEDA ================
+% =========== MODELO DE PROBLEMA DE BÚSQUEDA ================
 
 
 % UTILIDADES
@@ -329,8 +359,9 @@ seleccionar_avances([avance(_, _, Carga)|RestoAvances], CargaMaxima, Seleccionad
 
 
 % ALGORITMO DE BÚSQUEDA
-% Esto debe venir del input del usuario
-estado_inicial(estado([], proximo_periodo_calendario(2023, 1))).
+estado_inicial(estado(EstadosAsignaturas, proximo_periodo_calendario(AnioCalendario, Cuatrimestre))) :-
+    proximo_periodo_plan_alumno(AnioCalendario, Cuatrimestre),
+    estados_asignaturas_alumno(EstadosAsignaturas).
 
 estado(estado(EstadosAsignaturas, proximo_periodo_calendario(_, _))) :-
     forall(member(estado_asignatura(Codigo, Estado), EstadosAsignaturas), (
@@ -363,39 +394,43 @@ transicion(
     siguiente_periodo_calendario(AnioA, CuatrimestreA, AnioB, CuatrimestreB).
 
 
-depth_limited_search(Profundidad) :-
+% =========== ALGORITMO DE BÚSQUEDA ================
+
+iterative_deepening(SolucionAvances) :-
+    % Empezamos buscando desde profundidad 0
+    iterative_deepening(0, SolucionAvances).
+
+iterative_deepening(Profundidad, SolucionAvances) :-
+    depth_limited_search(Profundidad, _, SolucionAvances).
+
+iterative_deepening(Profundidad, SolucionAvances) :-
+    NuevaProfundidad is Profundidad + 1,
+    iterative_deepening(NuevaProfundidad, SolucionAvances).
+
+depth_limited_search(Profundidad, SolucionEstados, SolucionAvances) :-
     estado_inicial(EstadoInicial),
     %mostrar_estado(EstadoInicial),
-    depth_limited_search([], [], EstadoInicial, Profundidad, SolucionEstados, SolucionAvances),
-    length(SolucionAvances, Contador).
+    depth_limited_search([], [], EstadoInicial, Profundidad, SolucionEstados, SolucionAvances).
+    %length(SolucionAvances, Contador).
     %mostrar_solucion(SolucionAvances, SolucionEstados, Contador).
 
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, _, [EstadoOrigen|EstadosCamino], AvancesCamino) :- 
     EstadoOrigen = estado(EstadosAsignaturasOrigen, _),
     estado_final(estado(EstadosAsignaturasFinal, _)),
-    mismos_elementos(EstadosAsignaturasOrigen, EstadosAsignaturasFinal).
+    sort(EstadosAsignaturasOrigen, A),
+    sort(EstadosAsignaturasFinal, B),
+    A = B.
 
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, Profundidad, SolucionEstados, SolucionAvances) :-
     Profundidad > 0,
-    transicion(EstadoOrigen, 25, AvancesElegidos, EstadoDestino),
+    capacidad_carga_alumno(CapacidadCarga),
+    transicion(EstadoOrigen, CapacidadCarga, AvancesElegidos, EstadoDestino),
     \+ member(EstadoDestino, EstadosCamino),
     ProfundidadNueva is Profundidad - 1,
     %mostrar_avances(AvancesElegidos),
     %mostrar_estado(EstadoDestino),
     depth_limited_search([EstadoOrigen|EstadosCamino], [AvancesElegidos|AvancesCamino], EstadoDestino, ProfundidadNueva, SolucionEstados, SolucionAvances).
 
-
-% --- Predicados auxiliares eficientes ---
-mismos_elementos(Lista1, Lista2) :-
-    length(Lista1, Largo),
-    length(Lista2, Largo), % Tienen que medir lo mismo
-    todos_miembros(Lista1, Lista2).
-
-% Verifica que cada elemento de la primera lista esté en la segunda
-todos_miembros([], _).
-todos_miembros([X|Xs], Lista2) :-
-    member(X, Lista2),
-    todos_miembros(Xs, Lista2).
 /*
 mostrar_solucion([AvancesElegidos|RestoAvances], [Estado|RestoEstados], Contador) :-
     NuevoContador is Contador - 1,
