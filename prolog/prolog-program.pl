@@ -2,27 +2,11 @@
 
 % =========== INPUT: HECHOS SOBRE EL ALUMNO ================
 
-% Validaciones a agregar durante el cargado del JSON
-% - Lo que está cursando debe estar acorde al cuatrimestre actual, y se debe normalizar a "cursada" 
-%   en el estado inicial, y el cuatrimestre +1 para siguiente cuatrimestre
-
 :- dynamic capacidad_carga_alumno/1.
 :- dynamic proximo_periodo_plan_alumno/2.
 :- dynamic estados_asignaturas_alumno/1.
 :- dynamic optativa_elegida_i/1.
 :- dynamic optativa_elegida_ii/1.
-
-/*
-capacidad_carga_alumno(25).
-proximo_periodo_plan_alumno(2023, 1).
-estados_asignaturas_alumno([
-    estado_asignatura('IF001',cursada),
-    estado_asignatura('IF002',cursada),
-    estado_asignatura('FA007',aprobada)
-]).
-optativa_elegida_i('IF024').
-optativa_elegida_ii('IF028').
-*/
 
 % =========== INPUT: LICENCIATURA EN INFORMÁTICA (2010) ================
 
@@ -64,9 +48,11 @@ siguiente_estado_tipo_asignatura(acreditacion, sin_iniciar, aprobada, 2).
 siguiente_estado_tipo_asignatura(curso, sin_iniciar, aprobada, 2).
 siguiente_estado_tipo_asignatura(tesina, sin_iniciar, proyecto_presentado, 2).
 siguiente_estado_tipo_asignatura(tesina, proyecto_presentado, aprobada, 8).
-asignatura_se_considera(Estado, estado_asignatura(_, Estado)).
-asignatura_se_considera(cursada, estado_asignatura(Codigo, aprobada)) :-
-    asignatura(Codigo, materia, _, _).
+estado_asignatura_superado(Estado, estado_asignatura(_, Estado)).
+estado_asignatura_superado(EstadoSuperado, estado_asignatura(Codigo, EstadoReal)) :-
+    asignatura(Codigo, Tipo, _, _),
+    siguiente_estado_tipo_asignatura(Tipo, AnteriorEstadoReal, EstadoReal, _),
+    estado_asignatura_superado(EstadoSuperado, estado_asignatura(Codigo, AnteriorEstadoReal)).
 
 
 % ASIGNATURAS
@@ -217,11 +203,11 @@ requisito(aprobada, Codigo, requiere(proyecto_presentado, Codigo)) :-
 % No son generativos, solo validan dadas las entradas
 cumple_este_requisito(requiere(EstadoDeseado, Codigo), EstadosAsignaturas) :-
     member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
-    asignatura_se_considera(EstadoDeseado, estado_asignatura(Codigo, EstadoReal)).
+    estado_asignatura_superado(EstadoDeseado, estado_asignatura(Codigo, EstadoReal)).
 cumple_este_requisito(requiere(cantidad_minima_aprobadas, CantidadMinima), EstadosAsignaturas) :-
     findall(Codigo, (
         member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
-        asignatura_se_considera(aprobada, estado_asignatura(Codigo, EstadoReal))
+        estado_asignatura_superado(aprobada, estado_asignatura(Codigo, EstadoReal))
     ), Lista),
     length(Lista, CantidadAprobadas),
     CantidadAprobadas >= CantidadMinima.
