@@ -7,11 +7,19 @@ declare global {
     const pl: any;
 }
 
-await new Promise((resolve, reject) => {
+await new Promise<void>((resolve, reject) => {
     const script = document.createElement('script');
     script.src = Environment.PROLOG_ENGINE_PUBLIC_FILE_PATH;
-    script.onload = () => resolve(console.log("Tau Prolog loaded"));
-    script.onerror = () => reject(new Error(`Could not load Tau Prolog`));
+
+    script.onload = () => {
+        console.log("Tau Prolog loaded");
+        resolve();
+    };
+
+    script.onerror = () => {
+        reject(new Error(`Could not load Tau Prolog`));
+    };
+
     document.head.appendChild(script);
 });
 

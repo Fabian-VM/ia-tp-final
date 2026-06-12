@@ -5,6 +5,7 @@ export class UI {
 
     public static init(prologEngine: PrologClient): void {
         const dropZone = document.getElementById("drop-zone")!;
+        const button = document.getElementById("execute")
 
         dropZone.addEventListener("dragover", (e) => {
             e.preventDefault();
@@ -20,11 +21,17 @@ export class UI {
             }
             const content = JSON.parse(await file.text());
             const data = new PrologData(content);
-            prologEngine.loadData(data);
-            prologEngine.queryAll("depth_limited_search([], [], [3, 3, izquierda, 0, 0], 11, SolucionEstados, SolucionViajes).")
+
+        });
+
+        button?.addEventListener("click", async () => {
+            //prologEngine.queryAll("depth_limited_search(15).")
+            prologEngine.queryAll(`
+               depth_limited_search(11).
+            `)
             .then(console.log)
             .catch(console.error)
-        });
+        }) 
 
         console.log('UI initialized')
     }

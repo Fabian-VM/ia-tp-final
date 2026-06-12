@@ -269,7 +269,7 @@ puede_avanzar(Codigo, NuevoEstado, _, Carga, EstadosAsignaturas) :-
 
 puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas) :-
     asignatura(Codigo, Tipo, _, periodo_plan(_, Cuatrimestre)),
-    not(member(estado_asignatura(Codigo, _), EstadosAsignaturas)),
+    \+ (member(estado_asignatura(Codigo, _), EstadosAsignaturas)),
     siguiente_estado_tipo_asignatura(Tipo, sin_iniciar, NuevoEstado, Carga),
     verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
 
@@ -298,13 +298,25 @@ reemplazar_estado(estado_asignatura(Codigo, NuevoEstado), Lista, Resultado) :-
     Resultado = [estado_asignatura(Codigo, NuevoEstado)|Resto].
 reemplazar_estado(Estado, Lista, [Estado|Lista]).
 
-ordenar_avances(Lista, Ordenada) :-
-    map_list_to_pairs(valor_avance_negativo, Lista, Pares),
-    keysort(Pares, ParesOrdenados),
-    pairs_values(ParesOrdenados, Ordenada).
+% 1. Caso base
+ordenar_avances([], []).
 
-valor_avance_negativo(avance(_, Valor, _), Clave) :-
-    Clave is -Valor.
+% 2. Caso recursivo
+ordenar_avances([X|Xs], Ordenada) :-
+    ordenar_avances(Xs, RestoOrdenado),
+    insertar(X, RestoOrdenado, Ordenada).
+
+% --- Lógica de inserción limpia ---
+insertar(X, [], [X]).
+
+% Si el valor es mayor o igual, va primero
+insertar(avance(IdX, ValX, CX), [avance(IdY, ValY, CY)|Resto], [avance(IdX, ValX, CX), avance(IdY, ValY, CY)|Resto]) :-
+    ValX >= ValY.
+
+% Si es menor, saltamos al siguiente elemento
+insertar(avance(IdX, ValX, CX), [avance(IdY, ValY, CY)|Resto], [avance(IdY, ValY, CY)|Resultado]) :-
+    ValX < ValY,
+    insertar(avance(IdX, ValX, CX), Resto, Resultado).
 
 seleccionar_avances([], _, []).
 seleccionar_avances([avance(X, Valor, Carga)|RestoAvances], CargaMaxima, [avance(X, Valor, Carga)|Seleccionados]) :-
@@ -353,7 +365,7 @@ transicion(
 
 depth_limited_search(Profundidad) :-
     estado_inicial(EstadoInicial),
-    mostrar_estado(EstadoInicial),
+    %mostrar_estado(EstadoInicial),
     depth_limited_search([], [], EstadoInicial, Profundidad, SolucionEstados, SolucionAvances),
     length(SolucionAvances, Contador).
     %mostrar_solucion(SolucionAvances, SolucionEstados, Contador).
@@ -361,19 +373,29 @@ depth_limited_search(Profundidad) :-
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, _, [EstadoOrigen|EstadosCamino], AvancesCamino) :- 
     EstadoOrigen = estado(EstadosAsignaturasOrigen, _),
     estado_final(estado(EstadosAsignaturasFinal, _)),
-    sort(EstadosAsignaturasOrigen, A),
-    sort(EstadosAsignaturasFinal, B),
-    A = B.
+    mismos_elementos(EstadosAsignaturasOrigen, EstadosAsignaturasFinal).
 
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, Profundidad, SolucionEstados, SolucionAvances) :-
     Profundidad > 0,
     transicion(EstadoOrigen, 25, AvancesElegidos, EstadoDestino),
     \+ member(EstadoDestino, EstadosCamino),
     ProfundidadNueva is Profundidad - 1,
-    mostrar_avances(AvancesElegidos),
-    mostrar_estado(EstadoDestino),
+    %mostrar_avances(AvancesElegidos),
+    %mostrar_estado(EstadoDestino),
     depth_limited_search([EstadoOrigen|EstadosCamino], [AvancesElegidos|AvancesCamino], EstadoDestino, ProfundidadNueva, SolucionEstados, SolucionAvances).
 
+
+% --- Predicados auxiliares eficientes ---
+mismos_elementos(Lista1, Lista2) :-
+    length(Lista1, Largo),
+    length(Lista2, Largo), % Tienen que medir lo mismo
+    todos_miembros(Lista1, Lista2).
+
+% Verifica que cada elemento de la primera lista esté en la segunda
+todos_miembros([], _).
+todos_miembros([X|Xs], Lista2) :-
+    member(X, Lista2),
+    todos_miembros(Xs, Lista2).
 /*
 mostrar_solucion([AvancesElegidos|RestoAvances], [Estado|RestoEstados], Contador) :-
     NuevoContador is Contador - 1,
@@ -386,21 +408,22 @@ mostrar_solucion([AvancesElegidos|RestoAvances], [Estado|RestoEstados], Contador
     writeln('|---------------------------------|'),
     writeln('').
 */
+/*
 mostrar_avances(AvancesElegidos) :-
-    writeln('Avance:'),
+    write('Avance:\n'),
     forall(member(avance(estado_asignatura(Codigo, Estado), Valor, Carga), AvancesElegidos), (
         asignatura(Codigo, _, Nombre, _),
         format('[~w](~dp, ~dc) ~w      ~w        ~n', [Codigo, Valor, Carga, Estado, Nombre])
     )).
 
 mostrar_estado(estado(EstadosAsignaturas, proximo_periodo_calendario(AnioCalendario, Cuatrimestre))) :-
-    writeln('Estado:'),
+    write('Estado:\n'),
     forall(member(estado_asignatura(Codigo, Estado), EstadosAsignaturas), (
         asignatura(Codigo, _, Nombre, _),
         format('[~w] ~w      ~w ~n', [Codigo, Estado, Nombre])
     )),
     format('Próximo periodo: ~d ~d° cuatrimestre~n~n', [AnioCalendario, Cuatrimestre]).
-
+*/
 
 
 

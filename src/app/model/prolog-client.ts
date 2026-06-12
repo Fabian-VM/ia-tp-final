@@ -40,7 +40,7 @@ export class PrologClient {
             ? results[0]
             : null;
     }
-
+    
     public async queryAll(query: string): Promise<any[]> {
         return new Promise((resolve, reject) => {
             const results: any[] = [];
@@ -49,26 +49,47 @@ export class PrologClient {
                 success: () => {
                     const next = () => {
                         this.session.answer((answer: any) => {
+
                             if (answer === false) {
                                 resolve(results);
                                 return;
                             }
-                            const row: Record<string, any> = {};
-                            for (const [name, term] of Object.entries(answer.links)) {
-                                row[name] = this.termToValue(term);
+
+                            // Éxito sin variables
+                            if (answer && answer.links && Object.keys(answer.links).length === 0) {
+                                results.push(true);
+                                resolve(results);
+                                return;
                             }
-                            results.push(row);
-                            next();
+
+                            // Respuesta con variables
+                            if (answer?.links) {
+                                const row: Record<string, any> = {};
+
+                                for (const [name, term] of Object.entries(answer.links)) {
+                                    row[name] = this.termToValue(term);
+                                }
+
+                                results.push(row);
+                                next();
+                                return;
+                            }
+
+                            results.push(this.termToValue(answer));
+                            resolve(results);
                         });
                     };
 
                     next();
                 },
-                error: reject
-            });
+
+            error: (err: any) => {
+                console.error("Error en consulta Prolog:", query);
+                console.error("Tau error:", err);
+                reject(err);
+            }            });
         });
     }
-
     private async init(): Promise<void> {
         this.session = pl.create()
         await this.loadPrologCode(this.tauPrologImports)

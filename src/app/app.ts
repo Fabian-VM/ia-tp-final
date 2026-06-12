@@ -8,6 +8,5 @@ export class App{
 
         UI.init(prologEngine)
 
-
     }
 }
