@@ -3,7 +3,7 @@
 %   en el estado inicial, y el cuatrimestre +1 para siguiente cuatrimestre
 
 capacidad_carga_alumno(25).
-proximo_periodo_plan_alumno(2023, 1).
+proximo_periodo_calendario_alumno(2023, 1).
 estados_asignaturas_alumno([
     estado_asignatura('IF001',cursada),
     estado_asignatura('IF002',cursada),
