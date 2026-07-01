@@ -9,7 +9,7 @@ STATE_OPTIONS = {
 DB_TO_DISPLAY = {
     "sin_iniciar": "Sin Iniciar",
     "cursada": "Cursada",
-    "proyecto_presentado": "Proyecto Pres.",
+    "proyecto_presentado": "Proyecto Presentado",
     "aprobada": "Aprobada"
 }
 

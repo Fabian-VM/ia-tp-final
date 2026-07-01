@@ -32,49 +32,49 @@ estado_asignatura_superado(EstadoSuperado, estado_asignatura(Codigo, EstadoReal)
 % ASIGNATURAS
 % asignatura(Código, Tipo, Nombre, periodo_plan(AnioPlan, Cuatrimestre))
 % 1°
-asignatura('IF001', materia, elementos_de_informatica, periodo_plan(1, 1)).
-asignatura('MA045', materia, algebra, periodo_plan(1, 1)).
-asignatura('IF002', materia, expresion_de_problemas_y_algoritmos, periodo_plan(1, 1)).
-asignatura('IF003', materia, algoritmica_y_programacion_i, periodo_plan(1, 2)).
-asignatura('MA046', materia, analisis_matematico, periodo_plan(1, 2)).
-asignatura('MA008', materia, elementos_de_logica_y_matematica_discreta, periodo_plan(1, 2)).
-asignatura('FA007', acreditacion, acreditacion_de_idioma, periodo_plan(1, _)).
+asignatura('IF001', materia, 'Elementos de Informática', periodo_plan(1, 1)).
+asignatura('MA045', materia, 'Álgebra', periodo_plan(1, 1)).
+asignatura('IF002', materia, 'Expresión de Problemas y Algoritmos', periodo_plan(1, 1)).
+asignatura('IF003', materia, 'Algorítmica y Programación I', periodo_plan(1, 2)).
+asignatura('MA046', materia, 'Análisis Matemático', periodo_plan(1, 2)).
+asignatura('MA008', materia, 'Elementos de Lógica y Matemática Discreta', periodo_plan(1, 2)).
+asignatura('FA007', acreditacion, 'Acreditación de Idioma', periodo_plan(1, _)).
 % 2°
-asignatura('IF004', materia, sistemas_y_organizaciones, periodo_plan(2, 1)).
-asignatura('IF005', materia, arquitectura_de_computadoras, periodo_plan(2, 1)).
-asignatura('IF006', materia, algoritmica_y_programacion_ii, periodo_plan(2, 1)).
-asignatura('IF007', materia, bases_de_datos_i, periodo_plan(2, 2)).
-asignatura('MA006', materia, estadistica, periodo_plan(2, 2)).
-asignatura('IF008', materia, programacion_orientada_a_objetos, periodo_plan(2, 2)).
+asignatura('IF004', materia, 'Sistemas y Organizaciones', periodo_plan(2, 1)).
+asignatura('IF005', materia, 'Arquitectura de Computadoras', periodo_plan(2, 1)).
+asignatura('IF006', materia, 'Algorítmica y Programación II', periodo_plan(2, 1)).
+asignatura('IF007', materia, 'Bases de Datos I', periodo_plan(2, 2)).
+asignatura('MA006', materia, 'Estadística', periodo_plan(2, 2)).
+asignatura('IF008', materia, 'Programación Orientada a Objetos', periodo_plan(2, 2)).
 % 3°
-asignatura('IF009', materia, laboratorio_de_programacion_y_lenguajes, periodo_plan(3, 1)).
-asignatura('IF010', materia, analisis_y_diseno_de_sistemas, periodo_plan(3, 1)).
-asignatura('IF011', materia, sistemas_operativos, periodo_plan(3, 1)).
-asignatura('IF012', materia, desarrollo_de_software, periodo_plan(3, 2)).
-asignatura('IF013', materia, fundamentos_teoricos_de_informatica, periodo_plan(3, 2)).
-asignatura('MA047', materia, complementos_matematicos, periodo_plan(3, 2)).
-asignatura('FA102', curso, estrategias_comunicacionales, periodo_plan(3, 2)).
-asignatura('FA103', curso, relaciones_humanas, periodo_plan(3, 2)).
+asignatura('IF009', materia, 'Laboratorio de Programación y Lenguajes', periodo_plan(3, 1)).
+asignatura('IF010', materia, 'Análisis y Diseño de Sistemas', periodo_plan(3, 1)).
+asignatura('IF011', materia, 'Sistemas Operativos', periodo_plan(3, 1)).
+asignatura('IF012', materia, 'Desarrollo de Software', periodo_plan(3, 2)).
+asignatura('IF013', materia, 'Fundamentos Teóricos de Informática', periodo_plan(3, 2)).
+asignatura('MA047', materia, 'Complementos Matemáticos', periodo_plan(3, 2)).
+asignatura('FA102', curso, 'Estrategias Comunicacionales', periodo_plan(3, 2)).
+asignatura('FA103', curso, 'Relaciones Humanas', periodo_plan(3, 2)).
 % 4°
-asignatura('IF015', materia, ingenieria_de_software, periodo_plan(4, 1)).
-asignatura('IF018', materia, inteligencia_artificial, periodo_plan(4, 1)).
-asignatura('IF019', materia, redes_y_transmision_de_datos, periodo_plan(4, 1)).
-asignatura('IF016', materia, aspectos_legales_y_profesionales, periodo_plan(4, 2)).
-asignatura('IF020', materia, paradigmas_y_lenguajes_de_programacion, periodo_plan(4, 2)).
-asignatura('IF022', materia, sistemas_distribuidos, periodo_plan(4, 2)).
+asignatura('IF015', materia, 'Ingeniería de Software', periodo_plan(4, 1)).
+asignatura('IF018', materia, 'Inteligencia Artificial', periodo_plan(4, 1)).
+asignatura('IF019', materia, 'Redes y Transmisión de Datos', periodo_plan(4, 1)).
+asignatura('IF016', materia, 'Aspectos Legales y Profesionales', periodo_plan(4, 2)).
+asignatura('IF020', materia, 'Paradigmas y Lenguajes de Programación', periodo_plan(4, 2)).
+asignatura('IF022', materia, 'Sistemas Distribuidos', periodo_plan(4, 2)).
 % 5°
-asignatura('IF021', materia, arquitectura_de_redes_y_servicios, periodo_plan(5, 1)).
-asignatura('IF017', materia, taller_de_nuevas_tecnologias, periodo_plan(5, 1)).
-asignatura('IF025', materia, sistemas_embebidos_y_de_tiempo_real, periodo_plan(5, 2)).
-asignatura('IF026', tesina, tesina, periodo_plan(5, _)).
+asignatura('IF021', materia, 'Arquitectura de Redes y Servicios', periodo_plan(5, 1)).
+asignatura('IF017', materia, 'Taller de Nuevas Tecnologías', periodo_plan(5, 1)).
+asignatura('IF025', materia, 'Sistemas Embebidos y de Tiempo Real', periodo_plan(5, 2)).
+asignatura('IF026', tesina, 'Tesina', periodo_plan(5, _)).
 % Optativas 
-asignatura('IF014', materia, base_de_datos_ii, periodo_plan(5, 1)) :- optativa_elegida_i('IF014').
-asignatura('IF024', materia, informatica_industrial, periodo_plan(5, 1)) :- optativa_elegida_i('IF024').
-asignatura('IF027', materia, modelos_y_simulacion, periodo_plan(5, 1)) :- optativa_elegida_i('IF027').
-asignatura('IF023', materia, diseno_de_aplicaciones_web, periodo_plan(5, 2)) :- optativa_elegida_ii('IF023').
-asignatura('IF034', materia, sistemas_paralelos_ii, periodo_plan(5, 2)) :- optativa_elegida_ii('IF034').
-asignatura('IF053', materia, planificacion_y_gestion_si, periodo_plan(5, 2)) :- optativa_elegida_ii('IF053').
-asignatura('IF028', materia, monitorizacion_y_visualizacion, periodo_plan(5, 2)) :- optativa_elegida_ii('IF028').
+asignatura('IF014', materia, 'Base de Datos II', periodo_plan(5, 1)) :- optativa_elegida_i('IF014').
+asignatura('IF024', materia, 'Informática Industrial', periodo_plan(5, 1)) :- optativa_elegida_i('IF024').
+asignatura('IF027', materia, 'Modelos y Simulación', periodo_plan(5, 1)) :- optativa_elegida_i('IF027').
+asignatura('IF023', materia, 'Diseño de Aplicaciones Web', periodo_plan(5, 2)) :- optativa_elegida_ii('IF023').
+asignatura('IF034', materia, 'Sistemas Paralelos II', periodo_plan(5, 2)) :- optativa_elegida_ii('IF034').
+asignatura('IF053', materia, 'Planificación y Gestión SI', periodo_plan(5, 2)) :- optativa_elegida_ii('IF053').
+asignatura('IF028', materia, 'Monitorización y Visualización', periodo_plan(5, 2)) :- optativa_elegida_ii('IF028').
 
 % REQUISITOS
 % requisito(estado_asignatura(Codigo, Estado), requiere(estado_asignatura(Codigo, Estado)))

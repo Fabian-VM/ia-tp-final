@@ -1,10 +1,10 @@
 import streamlit as st
-from python.constants import (
+from utils.constants import (
     STATE_OPTIONS, DB_TO_DISPLAY, DISPLAY_TO_DB,
     optativas_i_options, optativas_ii_options, YEAR_COLOR_NAMES
 )
-from python.parser import parse_asignaturas
-from python.prolog_solver import init_prolog, ejecutar_consulta_plan, format_solucion
+from utils.parser import parse_asignaturas
+from utils.prolog_solver import init_prolog, ejecutar_consulta_plan, format_solucion
 
 # --- CONFIGURACIÓN DE PÁGINA ---
 st.set_page_config(

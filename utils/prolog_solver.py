@@ -1,6 +1,6 @@
 import re
 from pyswip import Prolog
-from python.constants import DB_TO_DISPLAY, optativas_i_options, optativas_ii_options
+from utils.constants import DB_TO_DISPLAY, optativas_i_options, optativas_ii_options
 
 def init_prolog(program_path="prolog/prolog-program.pl", plan_path="prolog/lic-informatica-2010.pl"):
     """
