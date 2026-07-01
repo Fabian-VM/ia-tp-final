@@ -5,6 +5,7 @@ anio_plan(2).
 anio_plan(3).
 anio_plan(4).
 anio_plan(5).
+ultimo_anio_plan(5).
 
 % DATOS DE ASIGNATURAS
 tipo_asignatura(acreditacion).
@@ -76,93 +77,94 @@ asignatura('IF053', materia, planificacion_y_gestion_si, periodo_plan(5, 2)) :- 
 asignatura('IF028', materia, monitorizacion_y_visualizacion, periodo_plan(5, 2)) :- optativa_elegida_ii('IF028').
 
 % REQUISITOS
-% requisito(Codigo, requiere(Requisito))
-requisito(cursada, 'IF003', requiere(cursada, 'IF002')).
-requisito(cursada, 'IF005', requiere(cursada, 'IF001')).
-requisito(cursada, 'IF006', requiere(cursada, 'IF003')).
-requisito(cursada, 'IF006', requiere(cursada, 'MA008')).
-requisito(cursada, 'IF007', requiere(cursada, 'IF006')).
-requisito(cursada, 'MA006', requiere(cursada, 'MA045')).
-requisito(cursada, 'MA006', requiere(cursada, 'MA046')).
-requisito(cursada, 'IF008', requiere(cursada, 'IF006')).
-requisito(cursada, 'IF009', requiere(cursada, 'IF008')).
-requisito(cursada, 'IF010', requiere(cursada, 'IF004')).
-requisito(cursada, 'IF010', requiere(cursada, 'IF007')).
-requisito(cursada, 'IF011', requiere(cursada, 'IF005')).
-requisito(cursada, 'IF011', requiere(cursada, 'IF006')).
-requisito(cursada, 'IF012', requiere(cursada, 'IF008')).
-requisito(cursada, 'IF012', requiere(cursada, 'IF010')).
-requisito(cursada, 'IF013', requiere(cursada, 'IF006')).
-requisito(cursada, 'IF013', requiere(cursada, 'MA008')).
-requisito(cursada, 'MA047', requiere(cursada, 'MA045')).
-requisito(cursada, 'MA047', requiere(cursada, 'MA046')).
-requisito(cursada, 'IF015', requiere(cursada, 'IF012')).
-requisito(cursada, 'IF015', requiere(cursada, 'MA006')).
-requisito(cursada, 'IF018', requiere(cursada, 'IF013')).
-requisito(cursada, 'IF018', requiere(cursada, 'MA047')).
-requisito(cursada, 'IF019', requiere(cursada, 'IF011')).
-requisito(cursada, 'IF020', requiere(cursada, 'IF009')).
-requisito(cursada, 'IF020', requiere(cursada, 'IF013')).
-requisito(cursada, 'IF022', requiere(cursada, 'IF019')).
-requisito(cursada, 'IF021', requiere(cursada, 'IF019')).
-requisito(cursada, 'IF017', requiere(cursada, 'IF015')).
-requisito(cursada, 'IF017', requiere(cursada, 'IF019')).
-requisito(cursada, 'IF025', requiere(cursada, 'IF015')).
-requisito(cursada, 'IF025', requiere(cursada, 'IF022')).
-requisito(aprobada, 'FA102', requiere(cantidad_minima_aprobadas, 10)).
-requisito(aprobada, 'FA103', requiere(cantidad_minima_aprobadas, 10)).
-requisito(cursada, 'IF016', requiere(cantidad_minima_aprobadas, 15)).
-requisito(cursada, 'IF014', requiere(cursada, 'IF010')) :- optativa_elegida_i('IF014').
-requisito(cursada, 'IF024', requiere(cursada, 'IF015')) :- optativa_elegida_i('IF024').
-requisito(cursada, 'IF024', requiere(cursada, 'IF019')) :- optativa_elegida_i('IF024').
-requisito(cursada, 'IF027', requiere(cursada, 'IF020')) :- optativa_elegida_i('IF027').
-requisito(cursada, 'IF023', requiere(cursada, 'IF009')) :- optativa_elegida_ii('IF023').
-requisito(cursada, 'IF023', requiere(cursada, 'IF015')) :- optativa_elegida_ii('IF023').
-requisito(cursada, 'IF023', requiere(cursada, 'IF019')) :- optativa_elegida_ii('IF023').
-requisito(cursada, 'IF034', requiere(cursada, 'IF018')) :- optativa_elegida_ii('IF034').
-requisito(cursada, 'IF053', requiere(cursada, 'IF015')) :- optativa_elegida_ii('IF053').
-requisito(cursada, 'IF028', requiere(cursada, 'IF024')) :- optativa_elegida_ii('IF028').
-requisito(proyecto_presentado, 'IF026', requiere(cursada, Codigo)) :-
-    asignatura(Codigo, materia, _, periodo_plan(4, _)).
-requisito(aprobada, 'IF026', requiere(aprobada, Codigo)) :-
+% requisito(estado_asignatura(Codigo, Estado), requiere(estado_asignatura(Codigo, Estado)))
+requisito(estado_asignatura('IF003', cursada), requiere(estado_asignatura('IF002', cursada))).
+requisito(estado_asignatura('IF005', cursada), requiere(estado_asignatura('IF001', cursada))).
+requisito(estado_asignatura('IF006', cursada), requiere(estado_asignatura('IF003', cursada))).
+requisito(estado_asignatura('IF006', cursada), requiere(estado_asignatura('MA008', cursada))).
+requisito(estado_asignatura('IF007', cursada), requiere(estado_asignatura('IF006', cursada))).
+requisito(estado_asignatura('MA006', cursada), requiere(estado_asignatura('MA045', cursada))).
+requisito(estado_asignatura('MA006', cursada), requiere(estado_asignatura('MA046', cursada))).
+requisito(estado_asignatura('IF008', cursada), requiere(estado_asignatura('IF006', cursada))).
+requisito(estado_asignatura('IF009', cursada), requiere(estado_asignatura('IF008', cursada))).
+requisito(estado_asignatura('IF010', cursada), requiere(estado_asignatura('IF004', cursada))).
+requisito(estado_asignatura('IF010', cursada), requiere(estado_asignatura('IF007', cursada))).
+requisito(estado_asignatura('IF011', cursada), requiere(estado_asignatura('IF005', cursada))).
+requisito(estado_asignatura('IF011', cursada), requiere(estado_asignatura('IF006', cursada))).
+requisito(estado_asignatura('IF012', cursada), requiere(estado_asignatura('IF008', cursada))).
+requisito(estado_asignatura('IF012', cursada), requiere(estado_asignatura('IF010', cursada))).
+requisito(estado_asignatura('IF013', cursada), requiere(estado_asignatura('IF006', cursada))).
+requisito(estado_asignatura('IF013', cursada), requiere(estado_asignatura('MA008', cursada))).
+requisito(estado_asignatura('MA047', cursada), requiere(estado_asignatura('MA045', cursada))).
+requisito(estado_asignatura('MA047', cursada), requiere(estado_asignatura('MA046', cursada))).
+requisito(estado_asignatura('IF015', cursada), requiere(estado_asignatura('IF012', cursada))).
+requisito(estado_asignatura('IF015', cursada), requiere(estado_asignatura('MA006', cursada))).
+requisito(estado_asignatura('IF018', cursada), requiere(estado_asignatura('IF013', cursada))).
+requisito(estado_asignatura('IF018', cursada), requiere(estado_asignatura('MA047', cursada))).
+requisito(estado_asignatura('IF019', cursada), requiere(estado_asignatura('IF011', cursada))).
+requisito(estado_asignatura('IF020', cursada), requiere(estado_asignatura('IF009', cursada))).
+requisito(estado_asignatura('IF020', cursada), requiere(estado_asignatura('IF013', cursada))).
+requisito(estado_asignatura('IF022', cursada), requiere(estado_asignatura('IF019', cursada))).
+requisito(estado_asignatura('IF021', cursada), requiere(estado_asignatura('IF019', cursada))).
+requisito(estado_asignatura('IF017', cursada), requiere(estado_asignatura('IF015', cursada))).
+requisito(estado_asignatura('IF017', cursada), requiere(estado_asignatura('IF019', cursada))).
+requisito(estado_asignatura('IF025', cursada), requiere(estado_asignatura('IF015', cursada))).
+requisito(estado_asignatura('IF025', cursada), requiere(estado_asignatura('IF022', cursada))).
+requisito(estado_asignatura('FA102', aprobada), requiere(cantidad_minima_aprobadas(10))).
+requisito(estado_asignatura('FA103', aprobada), requiere(cantidad_minima_aprobadas(10))).
+requisito(estado_asignatura('IF016', cursada), requiere(cantidad_minima_aprobadas(15))).
+requisito(estado_asignatura('IF014', cursada), requiere(estado_asignatura('IF010', cursada))) :- optativa_elegida_i('IF014').
+requisito(estado_asignatura('IF024', cursada), requiere(estado_asignatura('IF015', cursada))) :- optativa_elegida_i('IF024').
+requisito(estado_asignatura('IF024', cursada), requiere(estado_asignatura('IF019', cursada))) :- optativa_elegida_i('IF024').
+requisito(estado_asignatura('IF027', cursada), requiere(estado_asignatura('IF020', cursada))) :- optativa_elegida_i('IF027').
+requisito(estado_asignatura('IF023', cursada), requiere(estado_asignatura('IF009', cursada))) :- optativa_elegida_ii('IF023').
+requisito(estado_asignatura('IF023', cursada), requiere(estado_asignatura('IF015', cursada))) :- optativa_elegida_ii('IF023').
+requisito(estado_asignatura('IF023', cursada), requiere(estado_asignatura('IF019', cursada))) :- optativa_elegida_ii('IF023').
+requisito(estado_asignatura('IF034', cursada), requiere(estado_asignatura('IF018', cursada))) :- optativa_elegida_ii('IF034').
+requisito(estado_asignatura('IF053', cursada), requiere(estado_asignatura('IF015', cursada))) :- optativa_elegida_ii('IF053').
+requisito(estado_asignatura('IF028', cursada), requiere(estado_asignatura('IF024', cursada))) :- optativa_elegida_ii('IF028').
+requisito(estado_asignatura('IF026', proyecto_presentado), requiere(estado_asignatura(Codigo, cursada))) :-
     asignatura(Codigo, _, _, periodo_plan(4, _)).
-requisito(aprobada, 'IF026', requiere(cursada, Codigo)) :-
+requisito(estado_asignatura('IF026', aprobada), requiere(estado_asignatura(Codigo, aprobada))) :-
+    asignatura(Codigo, _, _, periodo_plan(4, _)).
+requisito(estado_asignatura('IF026', aprobada), requiere(estado_asignatura(Codigo, cursada))) :-
     asignatura(Codigo, materia, _, periodo_plan(5, 1)).
-requisito(aprobada, 'IF026', requiere(aprobada, Codigo)) :-
-    asignatura(Codigo, curso, _, periodo_plan(5, 1)).
-requisito(cursada, Codigo, requiere(aprobada, 'FA007')) :-
+requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura('FA007', aprobada))) :-
     anio_plan(AnioPlan),
     AnioPlan >= 2,
     asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
-requisito(cursada, Codigo, requiere(aprobada, 'FA102')) :-
+requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura('FA102', aprobada))) :-
     anio_plan(AnioPlan),
     AnioPlan >= 5,
     asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
-requisito(cursada, Codigo, requiere(aprobada, 'FA103')) :-
+requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura('FA103', aprobada))) :-
     anio_plan(AnioPlan),
     AnioPlan >= 5,
     asignatura(Codigo, _, _, periodo_plan(AnioPlan, _)).
-requisito(aprobada, Codigo, requiere(cursada, Codigo)) :-
+% Aprobación
+requisito(estado_asignatura(Codigo, aprobada), requiere(estado_asignatura(Codigo, cursada))) :-
     asignatura(Codigo, materia, _, _).
-requisito(aprobada, Codigo, requiere(aprobada, Correlativa)) :- 
-    asignatura(Codigo, _, _, _), 
-    asignatura(Correlativa, _, _, _), 
-    requisito(cursada, Codigo, requiere(cursada, Correlativa)).
-requisito(cursada, Codigo, requiere(aprobada, Precorrelativa)) :- 
-    asignatura(Codigo, _, _, _), 
-    asignatura(Precorrelativa, _, _, _), 
-    requisito(cursada, Codigo, requiere(cursada, Correlativa)), 
-    requisito(cursada, Correlativa, requiere(cursada, Precorrelativa)).
-requisito(aprobada, Codigo, requiere(proyecto_presentado, Codigo)) :-
+requisito(estado_asignatura(Codigo, aprobada), requiere(estado_asignatura(Codigo, proyecto_presentado))) :-
     asignatura(Codigo, tesina, _, _).
-
+% Correlatividad de materias para aprobar
+requisito(estado_asignatura(Codigo, aprobada), requiere(estado_asignatura(Correlativa, aprobada))) :- 
+    asignatura(Codigo, materia, _, _), 
+    asignatura(Correlativa, materia, _, _), 
+    requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura(Correlativa, cursada))).
+% Precorrelatividad de materias para aprobar
+requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura(Precorrelativa, aprobada))) :- 
+    asignatura(Codigo, materia, _, _), 
+    asignatura(Precorrelativa, materia, _, _), 
+    requisito(estado_asignatura(Codigo, cursada), requiere(estado_asignatura(Correlativa, cursada))), 
+    requisito(estado_asignatura(Correlativa, cursada), requiere(estado_asignatura(Precorrelativa, cursada))).
 
 % CUMPLIMIENTO DE REQUISITOS
 % No son generativos, solo validan dadas las entradas
-cumple_este_requisito(requiere(EstadoDeseado, Codigo), EstadosAsignaturas) :-
+cumple_requisito(EstadosAsignaturas, estado_asignatura(Codigo, EstadoDeseado)) :-
     member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
     estado_asignatura_superado(EstadoDeseado, estado_asignatura(Codigo, EstadoReal)).
-cumple_este_requisito(requiere(cantidad_minima_aprobadas, CantidadMinima), EstadosAsignaturas) :-
+
+cumple_requisito(EstadosAsignaturas, cantidad_minima_aprobadas(CantidadMinima)) :-
     findall(Codigo, (
         member(estado_asignatura(Codigo, EstadoReal), EstadosAsignaturas),
         estado_asignatura_superado(aprobada, estado_asignatura(Codigo, EstadoReal))

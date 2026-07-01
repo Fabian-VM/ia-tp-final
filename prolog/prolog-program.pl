@@ -2,117 +2,119 @@
 
 % =========== INPUT: HECHOS SOBRE EL ALUMNO ================
 
-:- dynamic capacidad_carga_alumno/1.
-:- dynamic proximo_periodo_calendario_alumno/2.
-:- dynamic estados_asignaturas_alumno/1.
+:- dynamic estado_inicial/1.
 :- dynamic optativa_elegida_i/1.
 :- dynamic optativa_elegida_ii/1.
 
 % =========== INPUT: PLAN DE ESTUDIOS ================
 
 % PERIODOS
-:- dynamic anio_plan/1. % anio_plan(AnioPlan).
-:- dynamic tipo_asignatura/1.        % tipo_asignatura(TipoAsignatura).
+:- dynamic ultimo_anio_plan/1. % ulitmo_anio_plan(AnioPlan).
 :- dynamic estado_tipo_asignatura/2. % estado_tipo_asignatura(TipoAsignatura, EstadoAsignatura).
 :- dynamic siguiente_estado_tipo_asignatura/4. % siguiente_estado_tipo_asignatura(Tipo, EstadoInicial, EstadoSiguiente, Carga).
 :- dynamic asignatura/4. % asignatura(Codigo, Tipo, Nombre, periodo_plan(AnioPlan, Cuatrimestre)).
-:- dynamic requisito/3. % requisito(Codigo, EstadoAsignatura, requiere(Requisito)).
-:- dynamic cumple_este_requisito/2. % cumple_este_requisito(Requisito, EstadosAsignaturas).
+:- dynamic requisito/2. % requisito(EstadoAsignatura, requiere(Requisito)).
+:- dynamic cumple_requisito/2. 
 
 
 % =========== INFERENCIAS ================
 
-
-% CUMPLIMIENTO DE REQUISITOS
-
 % HEURÍSTICA
-ultimo_anio_plan(5).
-valor_heuristica(estado_asignatura(Codigo, Estado), Valor) :-
+valor_heuristico_total(estado_asignatura(Codigo, Estado), ValorHeuristico) :-
     asignatura(Codigo, _, _, periodo_plan(AnioPlan, Cuatrimestre)),
-    desbloqueos_transitivos([estado_asignatura(Codigo, Estado)], Desbloqueadas),
-    length(Desbloqueadas, N),
-    valor_periodo_plan(AnioPlan, Cuatrimestre, M),
-    Valor is N*1 + M*0.
+    valor_heuristico(estado_asignatura(Codigo, Estado), X),
+    valor_heuristico(periodo_plan(AnioPlan, Cuatrimestre), Y),
+    ValorHeuristico is X*1 + Y*1.
 
-valor_periodo_plan(AnioPlan, Cuatrimestre, Valor) :-
+valor_heuristico(estado_asignatura(Codigo, Estado), ValorHeuristico) :-
+    desbloquea_estados_asignaturas_recursivo([estado_asignatura(Codigo, Estado)], EstadosAsignaturas),
+    length(EstadosAsignaturas, ValorHeuristico).
+
+valor_heuristico(periodo_plan(AnioPlan, Cuatrimestre), ValorHeuristico) :-
     nonvar(Cuatrimestre),
     ultimo_anio_plan(UltimoAnioPlan),
-    Valor is (UltimoAnioPlan - AnioPlan)*2 + Cuatrimestre + 1.
+    ValorMaximo is UltimoAnioPlan * 2,
+    ValorHeuristico is ValorMaximo - (AnioPlan - 1) * 2 - (Cuatrimestre - 1).
 
-valor_periodo_plan(AnioPlan, Cuatrimestre, Valor) :-
+valor_heuristico(periodo_plan(AnioPlan, Cuatrimestre), ValorHeuristico) :-
     var(Cuatrimestre),
     ultimo_anio_plan(UltimoAnioPlan),
-    Valor is (UltimoAnioPlan - AnioPlan)*2 + 1.
+    ValorMaximo is UltimoAnioPlan * 2,
+    ValorHeuristico is ValorMaximo - (AnioPlan - 1) * 2.
 
-desbloqueos_transitivos([], []) :- !.
+desbloquea_estados_asignaturas_recursivo([], []) :- !.
 
-desbloqueos_transitivos(Lista, Resultado) :-
-    expandir_lista(Lista, ExpansionSiguiente),
-    desbloqueos_transitivos(ExpansionSiguiente, ResultadoParcial),
+desbloquea_estados_asignaturas_recursivo(Lista, Resultado) :-
+    desbloquea_estados_asignaturas(Lista, DesbloqueosSiguientes),
+    desbloquea_estados_asignaturas_recursivo(DesbloqueosSiguientes, ResultadoParcial),
     append(Lista, ResultadoParcial, X),
     list_to_set(X, Resultado).
 
-expandir_lista([], []) :- !.
+desbloquea_estados_asignaturas(estado_asignatura(C1, E1), Desbloqueos) :-
+    findall(estado_asignatura(C2, E2), requisito(estado_asignatura(C2, E2), requiere(estado_asignatura(C1, E1))), Desbloqueos).
 
-expandir_lista([EstadoAsignatura|Resto], Resultado) :-
-    expandir(EstadoAsignatura, Expansion),
-    expandir_lista(Resto, RestoExpansion),
-    append(Expansion, RestoExpansion, X),
+desbloquea_estados_asignaturas([], []) :- !.
+
+desbloquea_estados_asignaturas([EstadoAsignatura|Resto], Resultado) :-
+    desbloquea_estados_asignaturas(EstadoAsignatura, Desbloqueos),
+    desbloquea_estados_asignaturas(Resto, RestoExpansion),
+    append(Desbloqueos, RestoExpansion, X),
     list_to_set(X, Resultado).
 
-expandir(estado_asignatura(C1, E1), Expansion) :-
-    findall(estado_asignatura(C2, E2), requisito(E2, C2, requiere(E1, C1)), Expansion).
 
-cumple_estos_requisitos([], _).
-cumple_estos_requisitos([Requisito|RestoRequisitos], EstadosAsignaturas) :-
-    cumple_este_requisito(Requisito, EstadosAsignaturas),
-    cumple_estos_requisitos(RestoRequisitos, EstadosAsignaturas).
 
-verificar_requisitos_para(estado_asignatura(Codigo, EstadoDeseado), EstadosAsignaturas) :-
-    findall(Requisito, requisito(EstadoDeseado, Codigo, Requisito), ListaRequisitos),
-    cumple_estos_requisitos(ListaRequisitos, EstadosAsignaturas).
 
+% CUMPLIMIENTO DE REQUISITOS
+% Solo validan, no son generativos
+cumple_requisitos(_, []).
+cumple_requisitos(EstadosAsignaturas, [Requisito|RestoRequisitos]) :-
+    cumple_requisito(EstadosAsignaturas, Requisito),
+    cumple_requisitos(EstadosAsignaturas, RestoRequisitos).
+
+verificar_requisitos(EstadosAsignaturas, estado_asignatura(Codigo, EstadoDeseado)) :-
+    findall(Requisito, requisito(estado_asignatura(Codigo, EstadoDeseado), requiere(Requisito)), ListaRequisitos),
+    cumple_requisitos(EstadosAsignaturas, ListaRequisitos).
 
 
 % CALCULO DE AVANCES
-% Generan o validan, dada la lista de EstadosAsignatura
-% STARTHERE Refactorizar esto para usar la estructura avance()
-% STARTHERE acá hay un problemon de separacion
-puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas) :-
-    asignatura(Codigo, Tipo, _, periodo_plan(_, Cuatrimestre)),
-    (
-        Tipo = materia, NuevoEstado = cursada;
-        Tipo = curso, NuevoEstado = aprobada
-    ),
-    member(estado_asignatura(Codigo, EstadoActual), EstadosAsignaturas),
+% Auxiliar para generar un avance para una asignatura
+avance_asignatura_aux(EstadosAsignaturas, Codigo, Tipo, EstadoActual, avance_asignatura(estado_asignatura(Codigo, NuevoEstado), ValorHeuristico, Carga)) :-
     siguiente_estado_tipo_asignatura(Tipo, EstadoActual, NuevoEstado, Carga),
-    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
+    verificar_requisitos(EstadosAsignaturas, estado_asignatura(Codigo, NuevoEstado)),
+    valor_heuristico_total(estado_asignatura(Codigo, NuevoEstado), ValorHeuristico).
 
-puede_avanzar(Codigo, NuevoEstado, _, Carga, EstadosAsignaturas) :-
+% Genera el avance posible para una asignatura en base a la lista de estados de asignaturas
+% El cuatrimestre importa o no dependiendo del tipo de asignatura y el estado a lograr
+avance_asignatura_posible(EstadosAsignaturas, _, AvanceAsignatura) :-
     asignatura(Codigo, Tipo, _, _),
     member(estado_asignatura(Codigo, EstadoActual), EstadosAsignaturas),
-    siguiente_estado_tipo_asignatura(Tipo, EstadoActual, NuevoEstado, Carga),
-    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
+    avance_asignatura_aux(EstadosAsignaturas, Codigo, Tipo, EstadoActual, AvanceAsignatura).
 
-puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas) :-
+avance_asignatura_posible(EstadosAsignaturas, _, AvanceAsignatura) :-
+    asignatura(Codigo, Tipo, _, _),
+    \+ (member(estado_asignatura(Codigo, _), EstadosAsignaturas)),
+    Tipo = tesina,
+    avance_asignatura_aux(EstadosAsignaturas, Codigo, Tipo, sin_iniciar, AvanceAsignatura).
+
+avance_asignatura_posible(EstadosAsignaturas, Cuatrimestre, AvanceAsignatura) :-
     asignatura(Codigo, Tipo, _, periodo_plan(_, Cuatrimestre)),
     \+ (member(estado_asignatura(Codigo, _), EstadosAsignaturas)),
-    siguiente_estado_tipo_asignatura(Tipo, sin_iniciar, NuevoEstado, Carga),
-    verificar_requisitos_para(estado_asignatura(Codigo, NuevoEstado), EstadosAsignaturas).
+    Tipo \= tesina,
+    avance_asignatura_aux(EstadosAsignaturas, Codigo, Tipo, sin_iniciar, AvanceAsignatura).
 
-avances_posibles(
-    estado(EstadosAsignaturas, proximo_periodo_calendario(_, Cuatrimestre)),
-    AvancesAsignaturasPosibles
+avance_periodo_posible(
+    estado_alumno(EstadosAsignaturas, proximo_periodo_calendario(_, Cuatrimestre), _),
+    avance_periodo(AvancesAsignaturasPosibles, periodo_calendario(_, Cuatrimestre))
 ) :-
-    findall(avance(estado_asignatura(Codigo, NuevoEstado), Valor, Carga), 
-    (
-        puede_avanzar(Codigo, NuevoEstado, Cuatrimestre, Carga, EstadosAsignaturas),
-        valor_heuristica(estado_asignatura(Codigo, NuevoEstado), Valor)
-    ), AvancesAsignaturasPosibles).
+    findall(
+        AvanceAsignatura, 
+        avance_asignatura_posible(EstadosAsignaturas, Cuatrimestre, AvanceAsignatura), 
+        AvancesAsignaturasPosibles
+    ).
 
 
 
-% UTILIDADES
+% UTILIDADES PARA ALGORITMO DE BÚSQUEDA
 siguiente_periodo_calendario(AnioCalendario, 1, AnioCalendario, 2).
 siguiente_periodo_calendario(AnioCalendario, 2, AnioCalendarioSiguiente, 1) :-
     AnioCalendarioSiguiente is AnioCalendario + 1.
@@ -131,18 +133,18 @@ ordenar_avances_por_heuristica([X|Xs], Ordenada) :-
     insertar(X, RestoOrdenado, Ordenada).
 
 insertar(X, [], [X]).
-insertar(avance(IdX, ValX, CX), [avance(IdY, ValY, CY)|Resto], [avance(IdX, ValX, CX), avance(IdY, ValY, CY)|Resto]) :-
+insertar(avance_asignatura(IdX, ValX, CX), [avance_asignatura(IdY, ValY, CY)|Resto], [avance_asignatura(IdX, ValX, CX), avance_asignatura(IdY, ValY, CY)|Resto]) :-
     ValX >= ValY.
-insertar(avance(IdX, ValX, CX), [avance(IdY, ValY, CY)|Resto], [avance(IdY, ValY, CY)|Resultado]) :-
+insertar(avance_asignatura(IdX, ValX, CX), [avance_asignatura(IdY, ValY, CY)|Resto], [avance_asignatura(IdY, ValY, CY)|Resultado]) :-
     ValX < ValY,
-    insertar(avance(IdX, ValX, CX), Resto, Resultado).
+    insertar(avance_asignatura(IdX, ValX, CX), Resto, Resultado).
 
 seleccionar_avances([], _, []).
-seleccionar_avances([avance(X, Valor, Carga)|RestoAvances], CargaMaxima, [avance(X, Valor, Carga)|Seleccionados]) :-
+seleccionar_avances([avance_asignatura(X, ValorHeuristico, Carga)|RestoAvances], CargaMaxima, [avance_asignatura(X, ValorHeuristico, Carga)|Seleccionados]) :-
     Carga =< CargaMaxima,
     NuevaCargaMaxima is CargaMaxima - Carga,
     seleccionar_avances(RestoAvances, NuevaCargaMaxima, Seleccionados).
-seleccionar_avances([avance(_, _, Carga)|RestoAvances], CargaMaxima, Seleccionados) :-
+seleccionar_avances([avance_asignatura(_, _, Carga)|RestoAvances], CargaMaxima, Seleccionados) :-
     Carga > CargaMaxima,
     seleccionar_avances(RestoAvances, CargaMaxima, Seleccionados).
 
@@ -150,41 +152,37 @@ seleccionar_avances([avance(_, _, Carga)|RestoAvances], CargaMaxima, Seleccionad
 
 
 % ALGORITMO DE BÚSQUEDA
-estado_inicial(estado(EstadosAsignaturas, proximo_periodo_calendario(AnioCalendario, Cuatrimestre))) :-
-    proximo_periodo_calendario_alumno(AnioCalendario, Cuatrimestre),
-    estados_asignaturas_alumno(EstadosAsignaturas).
+% el estado_inicial(Estado) se obtiene de la información que ingrese el alumno
 
-estado(estado(EstadosAsignaturas, proximo_periodo_calendario(_, _))) :-
+estado_intermedio(estado_alumno(EstadosAsignaturas, _, _)) :-
     forall(member(estado_asignatura(Codigo, Estado), EstadosAsignaturas), (
         asignatura(Codigo, Tipo, _, _),
         estado_tipo_asignatura(Tipo, Estado),
-        verificar_requisitos_para(estado_asignatura(Codigo, Estado), EstadosAsignaturas))
+        verificar_requisitos(estado_asignatura(Codigo, Estado), EstadosAsignaturas))
     ).
 
-estado_final(estado(EstadosAsignaturas, proximo_periodo_calendario(_, _))) :-
+estado_final(estado_alumno(EstadosAsignaturas, _, _)) :-
     findall(estado_asignatura(Codigo, aprobada), asignatura(Codigo, _, _, _), EstadosAsignaturas).
 
 transicion(
-    estado(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA)),
-    CapacidadCarga,
-    AvancesElegidos,
-    estado(EstadosAsignaturasB, proximo_periodo_calendario(AnioB, CuatrimestreB))
+    estado_alumno(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA), capacidad_carga(CapacidadCarga)),
+    avance_periodo(AvancesAsignaturasElegidos, periodo_calendario(AnioA, CuatrimestreA)),
+    estado_alumno(EstadosAsignaturasB, proximo_periodo_calendario(AnioB, CuatrimestreB), capacidad_carga(CapacidadCarga))
 ) :-
     % Elegir los mejores avances posibles dentro de la capacidad de carga del alumno
-    avances_posibles(
-        estado(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA)),
-        AvancesPosibles
+    avance_periodo_posible(
+        estado_alumno(EstadosAsignaturasA, proximo_periodo_calendario(AnioA, CuatrimestreA), _),
+        avance_periodo(AvancesAsignaturasPosibles, periodo_calendario(AnioA, CuatrimestreA))
     ),
-    ordenar_avances_por_heuristica(AvancesPosibles, AvancesPosiblesOrdenados),
-    seleccionar_avances(AvancesPosiblesOrdenados, CapacidadCarga, AvancesElegidos),
+    ordenar_avances_por_heuristica(AvancesAsignaturasPosibles, AvancesAsignaturasPosiblesOrdenados),
+    seleccionar_avances(AvancesAsignaturasPosiblesOrdenados, CapacidadCarga, AvancesAsignaturasElegidos),
 
     % Generar el nuevo estado
-    findall(Estado, member(avance(Estado, _, _), AvancesElegidos), NuevosEstadosAsignaturas),
+    findall(EstadoAsignatura, member(avance_asignatura(EstadoAsignatura, _, _), AvancesAsignaturasElegidos), NuevosEstadosAsignaturas),
     reemplazar_estados(EstadosAsignaturasA, NuevosEstadosAsignaturas, EstadosAsignaturasB),
     siguiente_periodo_calendario(AnioA, CuatrimestreA, AnioB, CuatrimestreB).
 
 iterative_deepening(SolucionAvances) :-
-    % Empezamos buscando desde profundidad 0
     iterative_deepening(0, SolucionAvances).
 
 iterative_deepening(Profundidad, SolucionAvances) :-
@@ -196,24 +194,18 @@ iterative_deepening(Profundidad, SolucionAvances) :-
 
 depth_limited_search(Profundidad, SolucionEstados, SolucionAvances) :-
     estado_inicial(EstadoInicial),
-    %mostrar_estado(EstadoInicial),
     depth_limited_search([], [], EstadoInicial, Profundidad, SolucionEstados, SolucionAvances).
-    %length(SolucionAvances, Contador).
-    %mostrar_solucion(SolucionAvances, SolucionEstados, Contador).
 
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, _, [EstadoOrigen|EstadosCamino], AvancesCamino) :- 
-    EstadoOrigen = estado(EstadosAsignaturasOrigen, _),
-    estado_final(estado(EstadosAsignaturasFinal, _)),
+    EstadoOrigen = estado_alumno(EstadosAsignaturasOrigen, _, _),
+    estado_final(estado_alumno(EstadosAsignaturasFinal, _, _)),
     sort(EstadosAsignaturasOrigen, A),
     sort(EstadosAsignaturasFinal, B),
     A = B.
 
 depth_limited_search(EstadosCamino, AvancesCamino, EstadoOrigen, Profundidad, SolucionEstados, SolucionAvances) :-
     Profundidad > 0,
-    capacidad_carga_alumno(CapacidadCarga),
-    transicion(EstadoOrigen, CapacidadCarga, AvancesElegidos, EstadoDestino),
+    transicion(EstadoOrigen, AvancesElegidos, EstadoDestino),
     \+ member(EstadoDestino, EstadosCamino),
     ProfundidadNueva is Profundidad - 1,
-    %mostrar_avances(AvancesElegidos),
-    %mostrar_estado(EstadoDestino),
     depth_limited_search([EstadoOrigen|EstadosCamino], [AvancesElegidos|AvancesCamino], EstadoDestino, ProfundidadNueva, SolucionEstados, SolucionAvances).
