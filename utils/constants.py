@@ -1,7 +1,7 @@
 # --- MAPEO DE ESTADOS ---
 STATE_OPTIONS = {
     "materia": ["Sin Iniciar", "Cursada", "Aprobada"],
-    "tesina": ["Sin Iniciar", "Proyecto Pres.", "Aprobada"],
+    "tesina": ["Sin Iniciar", "Proyecto Presentado", "Aprobada"],
     "acreditacion": ["Sin Iniciar", "Aprobada"],
     "curso": ["Sin Iniciar", "Aprobada"]
 }
@@ -38,3 +38,9 @@ YEAR_COLOR_NAMES = {
     5: "violet",
     "tesina": "gray"
 }
+
+# --- REQUISITOS ENTRE OPTATIVAS ---
+OPTATIVAS_REQUISITOS = {
+    "IF028": "IF024"
+}
+

@@ -21,7 +21,7 @@ siguiente_estado_tipo_asignatura(materia, cursada, aprobada, 2).
 siguiente_estado_tipo_asignatura(acreditacion, sin_iniciar, aprobada, 2).
 siguiente_estado_tipo_asignatura(curso, sin_iniciar, aprobada, 2).
 siguiente_estado_tipo_asignatura(tesina, sin_iniciar, proyecto_presentado, 2).
-siguiente_estado_tipo_asignatura(tesina, proyecto_presentado, aprobada, 8).
+siguiente_estado_tipo_asignatura(tesina, proyecto_presentado, aprobada, 10).
 estado_asignatura_superado(Estado, estado_asignatura(_, Estado)).
 estado_asignatura_superado(EstadoSuperado, estado_asignatura(Codigo, EstadoReal)) :-
     asignatura(Codigo, Tipo, _, _),
